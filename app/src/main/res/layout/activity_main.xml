@@ -122,11 +122,117 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:scrollbars="none">
-
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <!-- Add content here -->
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                  <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                      android:background="@drawable/button_design">
+
+                    <ImageView
+                        android:id="@+id/buddhasbelly"
+                        android:layout_width="400dp"
+                        android:layout_height="250dp"
+                        android:background="@drawable/round"
+                        android:clipToOutline="true"
+                        android:src="@drawable/buddhasbelly"
+                        android:scaleType="centerCrop"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/buddhasbelly"
+                        android:text="Buddha's Belly"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        />
+
+                  </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_design"
+                    android:layout_marginLeft="10dp">
+
+                    <ImageView
+                        android:id="@+id/the_margaux_grill"
+                        android:layout_width="400dp"
+                        android:layout_height="250dp"
+                        android:background="@drawable/round"
+                        android:clipToOutline="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/the_margaux_grill" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/the_margaux_grill"
+                        android:text="The Margaux Grill"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"/>
+
+                </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_design"
+                        android:layout_marginLeft="10dp">
+
+                        <ImageView
+                            android:id="@+id/daol_charcoal_grill"
+                            android:layout_width="400dp"
+                            android:layout_height="250dp"
+                            android:background="@drawable/round"
+                            android:clipToOutline="true"
+                            android:src="@drawable/daol_charcoal_grill"
+                            android:scaleType="centerCrop"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/daol_charcoal_grill"
+                            android:text="Daol Charcoal Grill"
+                            android:textColor="#000000"
+                            android:textSize="20sp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"/>
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_design"
+                        android:layout_marginLeft="10dp">
+
+                        <ImageView
+                            android:id="@+id/mobo_bar"
+                            android:layout_width="400dp"
+                            android:layout_height="250dp"
+                            android:background="@drawable/round"
+                            android:clipToOutline="true"
+                            android:src="@drawable/mobo_bar"
+                            android:scaleType="centerCrop"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/mobo_bar"
+                            android:text="Mobo Bar"
+                            android:textColor="#000000"
+                            android:textSize="20sp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"/>
+
+                    </RelativeLayout>
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -141,27 +247,36 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="50dp"
                     android:fontFamily="sans-serif-black"
-                    android:text="Micheline Restaurant"
+                    android:text="Micheline Restaurants"
                     android:textSize="24sp" />
+
             </LinearLayout>
 
             <HorizontalScrollView
-                android:layout_width="400dp"
-                android:layout_height="350dp"
-                android:background="@drawable/button_design"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:scrollbars="none">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                  <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                      android:background="@drawable/button_design">
 
                     <ImageView
                         android:id="@+id/samwongarden"
                         android:layout_width="400dp"
-                        android:layout_height="300dp"
+                        android:layout_height="250dp"
                         android:background="@drawable/round"
                         android:clipToOutline="true"
-                        android:src="@drawable/samwongarden" />
+                        android:src="@drawable/samwongarden"
+                        android:scaleType="centerCrop"/>
 
                     <TextView
                         android:id="@+id/my_text_view"
@@ -171,9 +286,37 @@
                         android:text="Samwon Garden"
                         android:textColor="#000000"
                         android:textSize="20sp"
-                        android:layout_marginLeft="10dp"/>
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"/>
 
-                </RelativeLayout>
+                  </RelativeLayout>
+                  <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_design"
+                    android:layout_marginLeft="10dp">
+
+                    <ImageView
+                        android:id="@+id/tounge_and_groove_joint"
+                        android:layout_width="400dp"
+                        android:layout_height="250dp"
+                        android:background="@drawable/round"
+                        android:clipToOutline="true"
+                        android:src="@drawable/tounge_and_groove_joint"
+                        android:scaleType="centerCrop"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tounge_and_groove_joint"
+                        android:text="Tounge and Groove Joint"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"/>
+
+                  </RelativeLayout>
+                </LinearLayout>
             </HorizontalScrollView>
 
             <!-- 일곱째줄 (지역구별 식당) -->
