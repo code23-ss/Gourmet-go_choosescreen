@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "35914497270",
+    "project_id": "gourmetgo-4da4f",
+    "storage_bucket": "gourmetgo-4da4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35914497270:android:eacb216ad94818a0ecc0d7",
+        "android_client_info": {
+          "package_name": "com.example.mainscreen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr8Npf9FpmE1CLpXN43V2EsdD1xhTSzbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

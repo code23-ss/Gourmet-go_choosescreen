@@ -1,6 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    tools:context=".GuideActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            app:iconifiedByDefault="false"
+            app:queryHint="search" />
+    </LinearLayout>
+
+    <!-- 상단 이미지 추가 -->
+    <!--**이미지 수정사항 -->
+    <ImageView
+        android:id="@+id/header_image"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sample" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_korea_food"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

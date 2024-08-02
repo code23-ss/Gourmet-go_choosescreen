@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MainScreen"
         tools:targetApi="31">
+
+        <activity android:name=".RestaurantsActivity" />
+        <activity android:name=".Jeju_RestaurantActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -21,10 +24,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ProfileActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".BusanActivity"/>
-        <activity android:name=".JejuActivity"/>
+        <activity android:name=".JejuActivity" />
+        <activity android:name=".BookActivity"/>
+        <activity android:name=".WaitActivity"/>
+        <activity android:name=".HotdealsActivity"/>
+        <activity android:name=".GuideActivity"/>
+
 
     </application>
 

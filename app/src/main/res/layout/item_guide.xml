@@ -1,0 +1,47 @@
+<!-- res/layout/item_deal.xml -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#ecf0f1">
+
+        <ImageView
+            android:id="@+id/guide_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sample" />
+
+
+        <TextView
+            android:id="@+id/guide_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:text="Tteokbokki(Stir-fried Rice Cake)"
+            android:textStyle="bold"
+            android:textColor="#e74c3c"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/guide_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:text="Sliced rice cake bar (garaetteok) or thin rice cake sticks (Tteokbokkitteok) stir-fried in a spicy gochujang sauce with vegetables and fish cakes"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

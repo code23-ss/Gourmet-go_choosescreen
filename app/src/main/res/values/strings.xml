@@ -5,4 +5,78 @@
         <item>Busan</item>
         <item>Jeju</item>
     </string-array>
+
+
+    <style name="CustomRelativeLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/button_design</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <!-- Define a style for the HorizontalScrollView -->
+    <style name="CustomHorizontalScrollView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">200dp</item>
+    </style>
+
+    <!-- Define a style for the inner LinearLayout inside HorizontalScrollView -->
+    <style name="CustomInnerLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+
+    </style>
+
+    <style name="RelativeLayoutInHorizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <!-- Define a style for the ImageView -->
+    <style name="CustomImageView">
+        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_height">200dp</item>
+        <item name="android:background">@drawable/round</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="ImageInBook">
+        <item name="android:layout_width">400dp</item>
+        <item name="android:layout_height">300dp</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <!-- Define a style for the TextView -->
+    <style name="CustomTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">casual</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_below">@id/scrollView</item>
+    </style>
+
+    <style name="TextViewInBook">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">casual</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_below">@id/scrollView</item>
+    </style>
+
 </resources>
