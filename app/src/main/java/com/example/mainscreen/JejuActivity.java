@@ -41,7 +41,7 @@ public class JejuActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.jeju);
 
         // Apply window insets to adjust padding
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_jeju), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;

@@ -1,21 +1,29 @@
 package com.example.mainscreen;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
-
+import android.util.Log;
+import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.Arrays;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class Jeju_RestaurantActivity extends AppCompatActivity {
 
+    private static final String TAG = "Jeju_RestaurantActivity";
+    private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.jeju_restaurants);
+        setContentView(R.layout.restaurants);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -23,79 +31,52 @@ public class Jeju_RestaurantActivity extends AppCompatActivity {
         }
 
         // RecyclerView 찾기
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-
-        // LayoutManager 설정
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // 어댑터 설정
-        RestaurantAdapter adapter = new RestaurantAdapter(getRestaurantList());
-        recyclerView.setAdapter(adapter);
+        // JSON 파일에서 데이터 비동기적으로 읽기
+        new LoadRestaurantsTask().execute();
     }
 
-    // 예시 레스토랑 리스트 메소드
-    private List<Restaurant> getRestaurantList() {
-        // 예시 데이터 생성
-        return Arrays.asList(
-                new Restaurant("Gasibang Noodle", Arrays.asList(
-                        R.drawable.jeju_gasiabangnoodle01, R.drawable.jeju_gasiabangnoodle02,
-                        R.drawable.jeju_gasiabangnoodle03, R.drawable.jeju_gasiabangnoodle04
-                )),
+    private class LoadRestaurantsTask extends AsyncTask<Void, Void, List<Restaurant>> {
 
-                new Restaurant("Gojipdol RockFish, Jungmun", Arrays.asList(
-                        R.drawable.jeju_gojipdol_ureong_jungmun03, R.drawable.jeju_gojipdol_ureong_jungmun01,
-                        R.drawable.jeju_gojipdol_ureong_jungmun02, R.drawable.jeju_gojipdol_ureong_jungmun04
-                )),
+        @Override
+        protected List<Restaurant> doInBackground(Void... voids) {
+            return loadRestaurantsFromJson();
+        }
 
-                new Restaurant("Jeju Kitchen Meat Noodles, Jeju Airport", Arrays.asList(
-                        R.drawable.jeju_jeju_kitchen_meat_noodles_jeju_airport01, R.drawable.jeju_jeju_kitchen_meat_noodles_jeju_airport02,
-                        R.drawable.jeju_jeju_kitchen_meat_noodles_jeju_airport03, R.drawable.jeju_jeju_kitchen_meat_noodles_jeju_airport04
-                )),
+        @Override
+        protected void onPostExecute(List<Restaurant> restaurantList) {
+            if (restaurantList != null) {
+                // 어댑터 설정
+                RestaurantAdapter adapter = new RestaurantAdapter(Jeju_RestaurantActivity.this, restaurantList);
+                recyclerView.setAdapter(adapter);
+            } else {
+                // 오류 메시지 표시
+                Toast.makeText(Jeju_RestaurantActivity.this, "Failed to load restaurant data from JSON.", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Failed to load restaurant data from JSON.");
+            }
+        }
+    }
 
-                new Restaurant("Sukseongdo, Jungmun", Arrays.asList(
-                        R.drawable.jeju_sukseongdo_jungmun01, R.drawable.jeju_sukseongdo_jungmun02,
-                        R.drawable.jeju_sukseongdo_jungmun03, R.drawable.jeju_sukseongdo_jungmun04
-                )),
+    private List<Restaurant> loadRestaurantsFromJson() {
+        String json;
+        try {
+            // assets 폴더에서 JSON 파일 읽기
+            InputStream is = getAssets().open("jeju_restaurants_image.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
 
-                new Restaurant("DeokSeongWon", Arrays.asList(
-                        R.drawable.jeju_deokseongwon01, R.drawable.jeju_deokseongwon02,
-                        R.drawable.jeju_deokseongwon03, R.drawable.jeju_deokseongwon04
-                )),
-
-                new Restaurant("Maison Glad, Jeju SamDaJeong", Arrays.asList(
-                        R.drawable.jeju_maison_glad_jeju_samdajeong01, R.drawable.jeju_maison_glad_jeju_samdajeong02,
-                        R.drawable.jeju_maison_glad_jeju_samdajeong03, R.drawable.jeju_maison_glad_jeju_samdajeong04
-                )),
-
-                new Restaurant("Narnia Restaurant", Arrays.asList(
-                        R.drawable.jeju_narnia_restaurant01, R.drawable.jeju_narnia_restaurant02,
-                        R.drawable.jeju_narnia_restaurant03, R.drawable.jeju_narnia_restaurant04
-                )),
-
-                new Restaurant("Western Noodles Shop", Arrays.asList(
-                        R.drawable.jeju_western_noodles_shop01, R.drawable.jeju_western_noodles_shop02,
-                        R.drawable.jeju_western_noodles_shop03, R.drawable.jeju_western_noodles_shop04
-                )),
-
-                new Restaurant("DorDor, Jeju Seogwipo", Arrays.asList(
-                        R.drawable.jeju_dordor_jeju_seogwipo01, R.drawable.jeju_dordor_jeju_seogwipo02,
-                        R.drawable.jeju_dordor_jeju_seogwipo03, R.drawable.jeju_dordor_jeju_seogwipo04
-                )),
-
-                new Restaurant("Haesong Raw Fish Restaurant", Arrays.asList(
-                        R.drawable.jeju_haesong_raw_fish_restaurant01, R.drawable.jeju_haesong_raw_fish_restaurant02,
-                        R.drawable.jeju_haesong_raw_fish_restaurant03, R.drawable.jeju_haesong_raw_fish_restaurant04
-                )),
-
-                new Restaurant("Sungsan Takuma Sushi", Arrays.asList(
-                        R.drawable.jeju_sungsan_takuma_sushi01, R.drawable.jeju_sungsan_takuma_sushi02,
-                        R.drawable.jeju_sungsan_takuma_sushi03, R.drawable.jeju_sungsan_takuma_sushi04
-                )),
-
-                new Restaurant("TongBalSungsan", Arrays.asList(
-                        R.drawable.jeju_tongbalsungsan01, R.drawable.jeju_tongbalsungsan02,
-                        R.drawable.jeju_tongbalsungsan03, R.drawable.jeju_tongbalsungsan04
-                ))
-        );
+        // JSON을 Restaurant 객체 리스트로 변환
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Restaurant>>() {}.getType();
+        return gson.fromJson(json, listType);
     }
 }

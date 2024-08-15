@@ -783,6 +783,7 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:clickable="true"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:background="@drawable/button_design"
@@ -790,6 +791,7 @@
                         android:id="@+id/korean"/>
 
                     <Button
+                        android:clickable="true"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
@@ -798,6 +800,7 @@
                         android:id="@+id/chinese"/>
 
                     <Button
+                        android:clickable="true"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
@@ -806,6 +809,7 @@
                         android:id="@+id/italian"/>
 
                     <Button
+                        android:clickable="true"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
@@ -814,6 +818,7 @@
                         android:id="@+id/japanese"/>
 
                     <Button
+                        android:clickable="true"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
@@ -822,13 +827,16 @@
                         android:id="@+id/fushion"/>
 
                     <Button
+                        android:clickable="true"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/button_design"
                         android:text="Asian"
                         android:id="@+id/asian"/>
+
                     <Button
+                        android:clickable="true"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"

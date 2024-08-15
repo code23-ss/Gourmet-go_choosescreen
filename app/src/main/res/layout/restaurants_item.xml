@@ -5,32 +5,39 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- 버튼을 감싸는 LinearLayout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_design"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:layout_marginTop="16dp">
 
+        <!-- 이미지들을 감싸는 HorizontalScrollView -->
         <HorizontalScrollView
             android:id="@+id/image_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:layout_gravity="center">
 
             <LinearLayout
                 android:id="@+id/image_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"
+                android:scaleType="centerCrop"
+                android:background="@drawable/round"
+                android:padding="0dp" />
         </HorizontalScrollView>
 
+        <!-- Restaurant Name -->
         <TextView
             android:id="@+id/restaurant_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@android:color/black"
             android:fontFamily="casual" />
     </LinearLayout>

@@ -1,10 +1,13 @@
 package com.example.mainscreen;
 
+import com.google.firebase.FirebaseApp;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,7 +28,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -39,6 +49,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Firebase 초기화
+        FirebaseApp.initializeApp(this);
+
+        // Firestore에서 데이터 로드 및 UI 업데이트
+        loadRestaurantsFromFirestore();
+
+        // Firestore 데이터 로드 후에 버튼 설정
+        setupCategoryButton(R.id.korean, "koreanCategoryId", "#E24443");
+        setupCategoryButton(R.id.chinese, "chineseCategoryId", "#E24443");
+        setupCategoryButton(R.id.italian, "italianCategoryId", "#E24443");
+        setupCategoryButton(R.id.japanese, "japaneseCategoryId", "#E24443");
+        setupCategoryButton(R.id.fushion, "fushionCategoryId", "#E24443");
+        setupCategoryButton(R.id.asian, "asianCategoryId", "#E24443");
+        setupCategoryButton(R.id.viewmore, "viewmoreCategoryId", "#E24443");
+
 
         // Apply window insets to adjust padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -60,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-
-        // Set default selection to "Seoul"
         spinner.setSelection(adapter.getPosition("Seoul"));
 
         // Initialize content layout
@@ -69,118 +93,42 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // Initialize executor service
         executorService = Executors.newFixedThreadPool(4);
-
-        // Set up category buttons
-        setupCategoryButton(R.id.korean, new int[]{
-                R.drawable.ajju,
-                R.drawable.tosokchon,
-                R.drawable.sintoburi,
-                R.drawable.daol_charcoal_grill,
-                R.drawable.sangdo_tripes
-        }, new String[]{
-                "Ajju",
-                "Tosokchon Samgyetang",
-                "Sintoburi Rice Cake Boki",
-                "Daol Charcoal Grill",
-                "Sangdo Tripes"
-        }, "#E24443");
-
-        setupCategoryButton(R.id.chinese, new int[]{
-                R.drawable.haidilao,
-                R.drawable.the_round,
-                R.drawable.songhwa_lamb_skewers,
-                R.drawable.jonny_dumpling,
-                R.drawable.pf_chang
-        }, new String[]{
-                "Haidilao Hotpot",
-                "The Round",
-                "Songhwa Lamb Skewers",
-                "Jonny Dumpling",
-                "P.F Chang"
-        }, "#E24443");
-
-        setupCategoryButton(R.id.italian, new int[]{
-                R.drawable.rosso_1924,
-                R.drawable.made_in_chicago_pizza,
-                R.drawable.downtowner,
-                R.drawable.slowpark,
-                R.drawable.schedule_cheongdam
-        }, new String[]{
-                "Rosso 1924",
-                "Made In Chicago Pizza",
-                "Downtowner",
-                "Slow Park",
-                "Schedule Cheongdam"
-        }, "#E24443");
-
-        setupCategoryButton(R.id.japanese, new int[]{
-                R.drawable.kandasoba,
-                R.drawable.tamayura,
-                R.drawable.ran_susa,
-                R.drawable.izakayakyum,
-                R.drawable.sushitano
-        }, new String[]{
-                "Kanda Soba",
-                "Tamayura",
-                "Ran Susa",
-                "Izakaya Kyum",
-                "Sushi Tano"
-        }, "#E24443");
-
-        setupCategoryButton(R.id.fushion, new int[]{
-                R.drawable.tokkijung,
-                R.drawable.vatos,
-                R.drawable.bar,
-                R.drawable.sanok,
-                R.drawable.yoongong_korea_bistro
-        }, new String[]{
-                "Tokkijung",
-                "Vatos",
-                "5412",
-                "Sanok",
-                "Yoongong Korea Bistro"
-        }, "#E24443");
-
-        setupCategoryButton(R.id.asian, new int[]{
-                R.drawable.camouflage,
-                R.drawable.khaosan,
-                R.drawable.new_delhi,
-                R.drawable.flavour_town,
-                R.drawable.asian_table
-        }, new String[]{
-                "Camouflage",
-                "KHAOSAN",
-                "New Delhi",
-                "Flavor Town",
-                "Asian Table"
-        }, "#E24443");
-
-        setupCategoryButton(R.id.viewmore, new int[]{
-                R.drawable.the_halal_guys,
-                R.drawable.mexicali,
-                R.drawable.dubai_restaurant,
-                R.drawable.durga,
-                R.drawable.couscous
-        }, new String[]{
-                "The Halal Guys",
-                "Mexicali",
-                "Dubai Restaurant",
-                "Durga",
-                "CousCous"
-        }, "#E24443");
-
-        // Initialize image click listeners
-        initializeImageClickListeners();
     }
 
-    private void setupCategoryButton(int buttonId, int[] imageResIds, String[] texts, String colorHex) {
+    private void setupCategoryButton(int buttonId, String categoryId, String colorHex) {
         Button button = findViewById(buttonId);
-
         button.setOnClickListener(v -> {
             handleButtonClick(button, colorHex);
-            executorService.submit(() -> loadContent(imageResIds, texts));
+            executorService.submit(() -> {
+                // 긴 작업을 백그라운드에서 수행
+                loadCategoryData(categoryId);
+            });
         });
     }
+
+    private void loadCategoryData(String categoryId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference categoryRef = db.collection("categories").document(categoryId);
+
+        db.collection("restaurants")
+                .whereArrayContains("category_ids", categoryRef) // 카테고리별로 필터링
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<String> imagePaths = new ArrayList<>();
+                        List<String> texts = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            imagePaths.add(document.getString("imagePath"));
+                            texts.add(document.getString("name"));
+                        }
+                        runOnUiThread(() -> loadContent(imagePaths.toArray(new String[0]), texts.toArray(new String[0])));
+                    } else {
+                        Log.w("Firestore", "Error getting documents.", task.getException());
+                    }
+                });
+    }
+
+
 
     private void handleButtonClick(Button button, String colorHex) {
         int color = Color.parseColor(colorHex);
@@ -207,28 +155,61 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    private void loadContent(int[] imageResIds, String[] texts) {
+    // Firestore 인스턴스
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    // Firestore에서 레스토랑 데이터를 가져오는 함수
+    private void loadRestaurantsFromFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("restaurants")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Restaurant> restaurants = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Restaurant restaurant = document.toObject(Restaurant.class);
+                            restaurants.add(restaurant);
+                        }
+                        // 데이터를 받은 후 추가 작업을 여기에 구현할 수 있습니다.
+                    } else {
+                        Log.w("Firestore", "Error getting documents.", task.getException());
+                    }
+                });
+    }
+
+    private void loadContent(String[] imagePaths, String[] texts) {
         runOnUiThread(() -> {
             contentLayout.removeAllViews(); // Clear existing views
 
             LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-            for (int i = 0; i < imageResIds.length; i++) {
+            for (int i = 0; i < imagePaths.length; i++) {
                 View itemView = inflater.inflate(R.layout.button_item, contentLayout, false);
 
                 ImageView imageView = itemView.findViewById(R.id.button_image);
-                Glide.with(MainActivity.this)
-                        .load(imageResIds[i])
-                        .apply(new RequestOptions().override(250, 200)) // Image size adjustment
-                        .into(imageView);
+                loadImageFromStorage(imagePaths[i], imageView); // Firebase Storage에서 이미지 로드
 
                 TextView textView = itemView.findViewById(R.id.button_text);
                 textView.setText(texts[i]);
-
-                Typeface typeface = Typeface.create("casual", Typeface.NORMAL);
-                textView.setTypeface(typeface);
+                textView.setTypeface(Typeface.create("casual", Typeface.NORMAL));
 
                 contentLayout.addView(itemView);
             }
+        });
+    }
+
+    private void loadImageFromStorage(String imagePath, ImageView imageView) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child(imagePath);
+
+        storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            Glide.with(MainActivity.this)
+                    .load(uri)
+                    .apply(new RequestOptions().override(250, 200))
+                    .into(imageView);
+        }).addOnFailureListener(exception -> {
+            Log.e("Firebase Storage", "Error getting image URL.", exception);
+            imageView.setImageResource(R.drawable.default_image); // 기본 이미지 설정 (필요 시)
         });
     }
 
@@ -242,11 +223,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setupClickListener(R.id.home, null); // Special case for "home" button
     }
 
-    private void setupClickListener(int imageViewId, Class<?> RestaurantsActivity) {
+    private void setupClickListener(int imageViewId, Class<?> activityClass) {
         ImageView imageView = findViewById(imageViewId);
         imageView.setOnClickListener(view -> {
-            if (RestaurantsActivity != null) {
-                Intent intent = new Intent(getApplicationContext(), RestaurantsActivity);
+            if (activityClass != null) {
+                Intent intent = new Intent(getApplicationContext(), activityClass);
                 startActivity(intent);
             } else {
                 Toast.makeText(MainActivity.this, "You are already on the home screen", Toast.LENGTH_SHORT).show();
@@ -257,8 +238,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Clear any images loaded by Glide from contentLayout
-        Glide.with(this).clear(contentLayout);
+        // Properly clear Glide images
+        Glide.get(this).clearMemory();
         executorService.shutdown();
     }
 
@@ -273,8 +254,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void resetButtonColors() {
-        // You can implement custom button color reset logic here if needed.
-        // For example, resetting all buttons to a default color or drawable.
         Button[] buttons = {
                 findViewById(R.id.korean),
                 findViewById(R.id.chinese),
