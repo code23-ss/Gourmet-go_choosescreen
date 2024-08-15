@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Buddha's Belly",
+    "location": "48, Noksapyeong-Daero 40 gil, Yongsan-gu, Seoul ,South Korea",
+    "opening_hours_1": "Mon-Thu 11:30-15:00/16:30-22:00 (Last order:21:00)",
+    "opening_hours_2": "Fri-Sun 11:30-15:00/16:30-23:00 (Last order:23:00)",
+    "contact": "821A0-1666-2753",
+    "cuisine": "Asian",
+    "priceRange": "₩2-30000",
+    "cuisineButton": "Thai",
+    "locationButton": "Itaewon",
+    "images": [ "buddhasbelly", "buddhasbelly_2", "buddhasbelly_3", "buddhasbelly_4", "buddhasbelly_5", "buddhasbelly_6"],
+    "menus": ["buddhasbelly_menu","buddhasbelly_menu2"]
+  },
+  {
+    "name": "The Margaux Grill",
+    "location": "JW Mariott Hotel, 176, Sinbanpo-ro, Seocho-gu, Seoul, South Korea",
+    "opening_hours_1": "Mon-Sun 11:30-14:30/18:00-22:00",
+    "opening_hours_2": "",
+    "contact": "02-6282-6760",
+    "cuisine": "Korean",
+    "priceRange": "₩10-150000",
+    "cuisineButton": "Grill",
+    "locationButton": "Gangnam",
+    "images": ["themagauxgrill2", "themagauxgrill3","the_magauxgrill4","themagauxgrill5","themargauxgrill"],
+    "menus": []
+  },
+  {
+    "name": "Daol Charcoal Grill",
+    "location": "8-11,Myeongdong 8-gil, Jung-gu, Seoul, South Korea",
+    "opening_hours_1": "Mon-Sun 11:00-23:00 (Last order:22:30)",
+    "opening_hours_2": "",
+    "contact": "0507-1462-1246",
+    "cuisine": "Korean",
+    "priceRange": "₩3-50000",
+    "cuisineButton": "Korean",
+    "locationButton": "Myeongdong",
+    "images": ["daol_charcoal_grill", "daol_2","daol_3","daol_4"],
+    "menus": []
+  },
+  {
+    "name": "Mobo Bar",
+    "location": "JW Mariott Hotel, 176, Sinbanpo-ro, Seocho-gu, Seoul, South Korea",
+    "opening_hours_1": "Mon-Sun 18:00-24:00 (Last order:23:30)",
+    "opening_hours_2": "",
+    "contact": "02-6282-6739",
+    "cuisine": "Japanese",
+    "priceRange": "₩5-100000",
+    "cuisineButton": "Bar",
+    "locationButton": "Gangnam",
+    "images": ["mobo_bar","mobo_bar_2","mobo_bar_3","mobo_bar_4","mobo_bar_5"],
+    "menus": []
+  },
+  {
+    "name": "Samwon Garden",
+    "location": "835, Eonju-ro, Gangnam-gu, Seoul, South Korea",
+    "opening_hours_1": "Mon-Sun 11:30-15:00/17:00-22:00",
+    "opening_hours_2": "",
+    "contact": "02-548-3030",
+    "cuisine": "Korean",
+    "priceRange": "₩5-100000",
+    "cuisineButton": "Grill",
+    "locationButton": "Gangnam",
+    "images": ["samwongarden","samwon_garden_2","samwon_garden_3","samwon_garden_4","samwon_garden_5","samwon_garden_6"],
+    "menus": []
+  }
+]
