@@ -56,14 +56,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Firestore에서 데이터 로드 및 UI 업데이트
         loadRestaurantsFromFirestore();
 
-        // Firestore 데이터 로드 후에 버튼 설정
-        setupCategoryButton(R.id.korean, "koreanCategoryId", "#E24443");
-        setupCategoryButton(R.id.chinese, "chineseCategoryId", "#E24443");
-        setupCategoryButton(R.id.italian, "italianCategoryId", "#E24443");
-        setupCategoryButton(R.id.japanese, "japaneseCategoryId", "#E24443");
-        setupCategoryButton(R.id.fushion, "fushionCategoryId", "#E24443");
-        setupCategoryButton(R.id.asian, "asianCategoryId", "#E24443");
-        setupCategoryButton(R.id.viewmore, "viewmoreCategoryId", "#E24443");
+        setupCategoryButton(R.id.korean, "categories/FoodType/Subcategories/Korean", "categories/Location/Subcategories/Seoul", "#E24443");
+        setupCategoryButton(R.id.chinese, "categories/FoodType/Subcategories/Chinese", "categories/Location/Subcategories/Seoul", "#E24443");
+        setupCategoryButton(R.id.italian, "categories/FoodType/Subcategories/Italian", "categories/Location/Subcategories/Seoul", "#E24443");
+        setupCategoryButton(R.id.japanese, "categories/FoodType/Subcategories/Japanese", "categories/Location/Subcategories/Seoul", "#E24443");
+        setupCategoryButton(R.id.fushion, "categories/FoodType/Subcategories/Fusion", "categories/Location/Subcategories/Seoul", "#E24443");
+        setupCategoryButton(R.id.asian, "categories/FoodType/Subcategories/Asian", "categories/Location/Subcategories/Seoul", "#E24443");
+        setupCategoryButton(R.id.viewmore, "categories/FoodType/Subcategories/View_more", "categories/Location/Subcategories/Seoul", "#E24443");
 
 
         // Apply window insets to adjust padding
@@ -93,42 +92,72 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // Initialize executor service
         executorService = Executors.newFixedThreadPool(4);
+
+        // Initialize image click listeners
+        initializeImageClickListeners();
     }
 
-    private void setupCategoryButton(int buttonId, String categoryId, String colorHex) {
+    private void setupCategoryButton(int buttonId, String foodTypeCategoryPath, String locationCategoryPath, String colorHex) {
         Button button = findViewById(buttonId);
         button.setOnClickListener(v -> {
             handleButtonClick(button, colorHex);
             executorService.submit(() -> {
-                // 긴 작업을 백그라운드에서 수행
-                loadCategoryData(categoryId);
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                // FoodType 카테고리 경로
+                DocumentReference foodTypeCategoryRef = db.document(foodTypeCategoryPath);
+
+                // Location 카테고리 경로
+                DocumentReference locationCategoryRef = db.document(locationCategoryPath);
+
+                db.collection("restaurants")
+                        .whereArrayContains("category_ids", foodTypeCategoryRef)
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                List<String> imagePaths = new ArrayList<>();
+                                List<String> names = new ArrayList<>();
+
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    List<DocumentReference> categoryIds = (List<DocumentReference>) document.get("category_ids");
+
+                                    boolean matchesLocation = false;
+                                    for (DocumentReference ref : categoryIds) {
+                                        if (ref.getPath().startsWith(locationCategoryRef.getPath())) {
+                                            matchesLocation = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (matchesLocation) {
+                                        String imagePath = (document.get("imagePath") != null) ? ((List<String>) document.get("imagePath")).get(0) : null;
+                                        String name = (document.getString("name") != null) ? document.getString("name") : "Unknown";
+
+                                        imagePaths.add(imagePath != null ? imagePath : "R.drawable.default_image");  // 실제 기본 이미지 리소스 ID
+                                        names.add(name);
+                                    }
+                                }
+
+                                runOnUiThread(() -> {
+                                    if (!imagePaths.isEmpty() && !names.isEmpty()) {
+                                        loadContent(imagePaths.toArray(new String[0]), names.toArray(new String[0]));
+                                    } else {
+                                        contentLayout.removeAllViews();
+                                        Log.w("Firestore", "No matching documents found.");
+                                    }
+                                });
+                            } else {
+                                Log.w("Firestore", "Error getting documents.", task.getException());
+                                runOnUiThread(() -> {
+                                    contentLayout.removeAllViews();
+                                    // Optional: Show error message to user
+                                });
+                            }
+                        });
+
             });
         });
     }
-
-    private void loadCategoryData(String categoryId) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference categoryRef = db.collection("categories").document(categoryId);
-
-        db.collection("restaurants")
-                .whereArrayContains("category_ids", categoryRef) // 카테고리별로 필터링
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        List<String> imagePaths = new ArrayList<>();
-                        List<String> texts = new ArrayList<>();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            imagePaths.add(document.getString("imagePath"));
-                            texts.add(document.getString("name"));
-                        }
-                        runOnUiThread(() -> loadContent(imagePaths.toArray(new String[0]), texts.toArray(new String[0])));
-                    } else {
-                        Log.w("Firestore", "Error getting documents.", task.getException());
-                    }
-                });
-    }
-
-
 
     private void handleButtonClick(Button button, String colorHex) {
         int color = Color.parseColor(colorHex);
@@ -172,6 +201,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             restaurants.add(restaurant);
                         }
                         // 데이터를 받은 후 추가 작업을 여기에 구현할 수 있습니다.
+
+                        // 데이터를 받아온 후 loadContent 호출
+                        String[] imagePaths = new String[restaurants.size()];
+                        String[] texts = new String[restaurants.size()];
+
+                        for (int i = 0; i < restaurants.size(); i++) {
+                            imagePaths[i] = restaurants.get(i).getImagePath().isEmpty() ? "default_image_path" : restaurants.get(i).getImagePath().get(0); // 예시
+                            texts[i] = restaurants.get(i).getName();
+                        }
+
+                        loadContent(imagePaths, texts); // 여기서 호출
+
                     } else {
                         Log.w("Firestore", "Error getting documents.", task.getException());
                     }
@@ -193,10 +234,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 textView.setText(texts[i]);
                 textView.setTypeface(Typeface.create("casual", Typeface.NORMAL));
 
+                // final 변수를 사용하여 람다식에서 참조
+                final String imagePath = imagePaths[i];
+                final String text = texts[i];
+
+                // 클릭 리스너 설정
+                itemView.setOnClickListener(v -> {
+                    Intent intent = new Intent(MainActivity.this, RestaurantDetailsActivity.class);
+                    intent.putExtra("imagePath", imagePath);
+                    intent.putExtra("name", text);
+                    startActivity(intent);
+                });
+
                 contentLayout.addView(itemView);
             }
         });
     }
+
+
 
     private void loadImageFromStorage(String imagePath, ImageView imageView) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -208,9 +263,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     .apply(new RequestOptions().override(250, 200))
                     .into(imageView);
         }).addOnFailureListener(exception -> {
-            Log.e("Firebase Storage", "Error getting image URL.", exception);
-            imageView.setImageResource(R.drawable.default_image); // 기본 이미지 설정 (필요 시)
+            Log.e("Firebase Storage", "Error getting image URL. File not found at location.", exception);
+            imageView.setImageResource(R.drawable.default_image);  // 기본 이미지 설정
         });
+
     }
 
     private void initializeImageClickListeners() {

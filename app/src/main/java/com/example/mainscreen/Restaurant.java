@@ -29,7 +29,7 @@ public class Restaurant {
     private String location = "";
 
     @PropertyName("menu")
-    private Map<String, Map<String, String>> menu = new HashMap<>();
+    private Map<String, List<String>> menu = new HashMap<>();
 
     @PropertyName("name")
     private String name = "";
@@ -42,7 +42,7 @@ public class Restaurant {
 
     @PropertyName("rating")
     private double rating = 0.0;
-
+    
 
 
     // 기본 생성자
@@ -98,18 +98,20 @@ public class Restaurant {
         this.location = location;
     }
 
-    public Map<String, Map<String, String>> getMenu() {
+    public Map<String, List<String>> getMenu() {
         return menu;
     }
 
-    public void setMenu(Map<String, Map<String, String>> menu) {
+    public void setMenu(Map<String, List<String>> menu) {
         this.menu = menu;
     }
 
+    @PropertyName("name")
     public String getName() {
         return name;
     }
 
+    @PropertyName("name")
     public void setName(String name) {
         this.name = name;
     }

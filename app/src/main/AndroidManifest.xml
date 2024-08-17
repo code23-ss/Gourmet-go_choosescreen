@@ -41,6 +41,8 @@
         <activity android:name=".RestaurantsActivity" />
         <activity android:name=".BookingConfirmationActivity"/>
         <activity android:name=".Jeju_RestaurantActivity" />
+        <activity android:name=".RestaurantDetailsActivity" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

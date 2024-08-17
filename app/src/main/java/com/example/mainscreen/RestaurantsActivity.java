@@ -1,6 +1,5 @@
 package com.example.mainscreen;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -8,11 +7,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Type;
+
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class RestaurantsActivity extends AppCompatActivity {
@@ -34,49 +34,52 @@ public class RestaurantsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // JSON 파일에서 데이터 비동기적으로 읽기
-        new LoadRestaurantsTask().execute();
+        // Firestore에서 데이터 비동기적으로 읽기
+        loadRestaurantsFromFirestore();
     }
 
-    private class LoadRestaurantsTask extends AsyncTask<Void, Void, List<Restaurant>> {
+    private void loadRestaurantsFromFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String locationPath = "categories/Location/Subcategories/Seoul";
 
-        @Override
-        protected List<Restaurant> doInBackground(Void... voids) {
-            return loadRestaurantsFromJson();
-        }
+        db.collection("restaurants")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Restaurant> restaurantList = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // 각 문서의 category_ids 필드 가져오기
+                            List<DocumentReference> categoryIds = (List<DocumentReference>) document.get("category_ids");
 
-        @Override
-        protected void onPostExecute(List<Restaurant> restaurantList) {
-            if (restaurantList != null) {
-                // 어댑터 설정
-                RestaurantAdapter adapter = new RestaurantAdapter(RestaurantsActivity.this, restaurantList);
-                recyclerView.setAdapter(adapter);
-            } else {
-                // 오류 메시지 표시
-                Toast.makeText(RestaurantsActivity.this, "Failed to load restaurant data from JSON.", Toast.LENGTH_LONG).show();
-                Log.e(TAG, "Failed to load restaurant data from JSON.");
-            }
-        }
-    }
+                            // category_ids에서 locationPath로 시작하는 경로가 있는지 확인
+                            boolean matchesLocation = false;
+                            for (DocumentReference ref : categoryIds) {
+                                if (ref.getPath().startsWith(locationPath)) {
+                                    matchesLocation = true;
+                                    break;
+                                }
+                            }
 
-    private List<Restaurant> loadRestaurantsFromJson() {
-        String json;
-        try {
-            // assets 폴더에서 JSON 파일 읽기
-            InputStream is = getAssets().open("restaurants_image.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
+                            // locationPath에 해당하는 문서만 리스트에 추가
+                            if (matchesLocation) {
+                                Restaurant restaurant = document.toObject(Restaurant.class);
 
-        // JSON을 Restaurant 객체 리스트로 변환
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<Restaurant>>() {}.getType();
-        return gson.fromJson(json, listType);
+                                // 로그 추가: name 및 imagePath 확인
+                                Log.d(TAG, "Restaurant Name: " + restaurant.getName());
+                                Log.d(TAG, "Restaurant Image Paths: " + restaurant.getImagePath());
+
+                                restaurantList.add(restaurant);
+                            }
+                        }
+
+                        // RecyclerView 어댑터 설정
+                        RestaurantAdapter adapter = new RestaurantAdapter(RestaurantsActivity.this, restaurantList);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        // 오류 메시지 표시
+                        Toast.makeText(RestaurantsActivity.this, "Failed to load restaurant data from Firestore.", Toast.LENGTH_LONG).show();
+                        Log.e(TAG, "Error getting documents: ", task.getException());
+                    }
+                });
     }
 }
