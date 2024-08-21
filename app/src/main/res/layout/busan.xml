@@ -2,49 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/main_busan"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:gravity="center"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".BusanActivity">
 
     <ScrollView
-        android:fillViewport="true"
-        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <!--  첫째줄  (위치 변경 기능)    -->
+            <!-- 첫째줄 (위치 변경 기능) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:src="@drawable/location"
                     android:layout_width="50dp"
-                    android:layout_height="50dp" />
-
-                <TextView
-                    android:layout_width="82dp"
                     android:layout_height="50dp"
-                    android:text="Busan"
-                    android:layout_marginTop="10dp"
-                    android:textSize="20dp" />
+                    android:src="@drawable/location" />
 
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp" />
             </LinearLayout>
 
-            <!-- 둘째줄(검색기능)    -->
+            <!-- 둘째줄 (검색기능) -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -52,8 +51,6 @@
                     android:id="@+id/search_view"
                     android:layout_width="395dp"
                     android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="0"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="30dp"
@@ -61,128 +58,174 @@
                     app:queryHint="search" />
             </LinearLayout>
 
-            <!--  셋째줄      -->
+            <!-- 셋째줄 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
-                    android:layout_width="123dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="0"
-                    android:background="@drawable/button_design"
-                    android:text="Book"
-                    tools:layout_editor_absoluteX="28dp"
-                    tools:layout_editor_absoluteY="108dp" />
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <Button
-                    android:layout_width="123dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="0"
-                    android:layout_marginLeft="55dp"
-                    android:background="@drawable/button_design"
-                    android:text="Guide"
-                    tools:layout_editor_absoluteX="28dp"
-                    tools:layout_editor_absoluteY="108dp" />
+                    <ImageView
+                        android:id="@+id/book"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/button_design_oval"
+                        android:padding="15dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/book"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="Book"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/wait"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/button_design_oval"
+                        android:padding="15dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/wait"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="Wait"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/hotdeals"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/button_design_oval"
+                        android:padding="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/hotdeals"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="Hot Deals"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/guide"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/button_design_oval"
+                        android:padding="5dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/guide"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="Guide"
+                        android:textSize="15dp" />
+                </LinearLayout>
 
             </LinearLayout>
 
-            <!--  넷째줄      -->
+            <!-- 다섯째줄 (인기 레스토랑 및 바) -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <Button
-                    android:layout_width="123dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="0"
-                    android:layout_marginTop="1.3dp"
-                    android:background="@drawable/button_design"
-                    android:text="Hot Deals"
-                    tools:layout_editor_absoluteX="28dp"
-                    tools:layout_editor_absoluteY="108dp" />
-
-                <Button
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="0"
-                    android:layout_marginLeft="55dp"
-                    android:layout_marginTop="1.3dp"
-                    android:background="@drawable/button_design"
-                    android:text="Rewards"
-                    tools:layout_editor_absoluteX="28dp"
-                    tools:layout_editor_absoluteY="108dp" />
-            </LinearLayout>
-
-            <!-- 5번째줄(인기 레스토랑 및 바)       -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="50dp"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="sans-serif-smallcaps"
                     android:text="Top Restaurant/Bar"
                     android:textSize="24sp" />
-
             </LinearLayout>
 
-            <HorizontalScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/restaurantsRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:scrollbars="none">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                android:scrollbars="none" />
 
-
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <!--  6번째 줄(미슐렝)      -->
+            <!-- 여섯째줄 (미슐렝) -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="50dp"
-                    android:fontFamily="sans-serif-black"
-                    android:text="Micheline Restaurant"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="Michelin Restaurants 2024"
                     android:textSize="24sp" />
 
             </LinearLayout>
 
-            <HorizontalScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/michelin_restaurants_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="none">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="horizontal"
+                android:scrollbars="none" />
 
 
+            <!-- 일곱째줄 (지역구별 식당) -->
 
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <!--  7번째 줄(지역구별 식당)      -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -192,7 +235,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="50dp"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="sans-serif-smallcaps"
                     android:text="Browse by Location"
                     android:textSize="24sp" />
 
@@ -200,198 +243,250 @@
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:scrollbars="none">
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/new_haeundae_card_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginLeft="10dp"
+                        android:onClick="openRestaurantsActivity"
+                        android:tag="categories/Location/Subcategories/Busan/Sub_subcategories/Haeundae"
+                        app:cardCornerRadius="10dp">
 
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:alpha="0.6"
+                                android:src="@drawable/haeundae" />
+
+                            <TextView
+                                android:id="@+id/haeundae"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Haeundae"
+                                android:textColor="#FFFFFF"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
 
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/new_gwangalli_card_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginLeft="10dp"
+                        android:onClick="openRestaurantsActivity"
+                        android:tag="categories/Location/Subcategories/Busan/Sub_subcategories/Gwangalli"
+                        app:cardCornerRadius="10dp">
 
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:alpha="0.6"
+                                android:src="@drawable/gwangalli" />
+
+                            <TextView
+                                android:id="@+id/gwangalli"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Gwangalli"
+                                android:textColor="#FFFFFF"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
 
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/new_gangseo_gu_card_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginLeft="10dp"
+                        android:onClick="openRestaurantsActivity"
+                        android:tag="categories/Location/Subcategories/Busan/Sub_subcategories/Gangseogu"
+                        app:cardCornerRadius="10dp" >
 
-                    </androidx.cardview.widget.CardView>
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:alpha="0.6"
+                                android:src="@drawable/gangseo_gu" />
 
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-
+                            <TextView
+                                android:id="@+id/gangseo_gu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Gangseo\n-gu"
+                                android:textColor="#FFFFFF"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
             </HorizontalScrollView>
 
-            <!-- 8번째 줄(음식 타입)       -->
+            <!-- 여덟째줄 (음식 타입) -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="50dp"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="sans-serif-smallcaps"
                     android:text="Cuisine"
                     android:textSize="24sp" />
             </LinearLayout>
 
-
             <HorizontalScrollView
+                android:id="@+id/horizontal_scroll_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:scrollbars="none">
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <Button
-                        android:layout_width="match_parent"
+                        android:id="@+id/korean"
+                        android:layout_width="wrap_content"
                         android:layout_height="31dp"
-                        android:layout_row="2"
-                        android:layout_column="0"
                         android:background="@drawable/button_design"
-                        android:text="Korean"
-                        tools:layout_editor_absoluteX="28dp"
-                        tools:layout_editor_absoluteY="108dp" />
+                        android:clickable="true"
+                        android:text="Korean" />
 
                     <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="31dp"
-                        android:layout_row="2"
-                        android:layout_column="0"
-                        android:background="@drawable/button_design"
-                        android:text="Chinese"
-                        android:layout_marginLeft="10dp"
-                        tools:layout_editor_absoluteX="28dp"
-                        tools:layout_editor_absoluteY="108dp" />
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="31dp"
-                        android:layout_row="2"
-                        android:layout_column="0"
-                        android:background="@drawable/button_design"
-                        android:text="Italian"
-                        android:layout_marginLeft="10dp"
-                        tools:layout_editor_absoluteX="28dp"
-                        tools:layout_editor_absoluteY="108dp" />
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="31dp"
-                        android:layout_row="2"
-                        android:layout_column="0"
-                        android:background="@drawable/button_design"
-                        android:text="Japanese"
-                        android:layout_marginLeft="10dp"
-                        tools:layout_editor_absoluteX="28dp"
-                        tools:layout_editor_absoluteY="108dp" />
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="31dp"
-                        android:layout_row="2"
-                        android:layout_column="0"
-                        android:background="@drawable/button_design"
-                        android:text="Fushion"
-                        android:layout_marginLeft="10dp"
-                        tools:layout_editor_absoluteX="28dp"
-                        tools:layout_editor_absoluteY="108dp" />
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="31dp"
-                        android:layout_row="2"
-                        android:layout_column="0"
-                        android:background="@drawable/button_design"
-                        android:text="Asian"
-                        android:layout_marginLeft="10dp"
-                        tools:layout_editor_absoluteX="28dp"
-                        tools:layout_editor_absoluteY="108dp" />
-                    <Button
+                        android:id="@+id/chinese"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/button_design"
+                        android:clickable="true"
+                        android:text="Chinese" />
+
+                    <Button
+                        android:id="@+id/italian"
+                        android:layout_width="wrap_content"
+                        android:layout_height="31dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/button_design"
+                        android:clickable="true"
+                        android:text="Italian" />
+
+                    <Button
+                        android:id="@+id/japanese"
+                        android:layout_width="wrap_content"
+                        android:layout_height="31dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/button_design"
+                        android:clickable="true"
+                        android:text="Japanese" />
+
+                    <Button
+                        android:id="@+id/fusion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="31dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/button_design"
+                        android:clickable="true"
+                        android:text="Fusion" />
+
+                    <Button
+                        android:id="@+id/asian"
+                        android:layout_width="wrap_content"
+                        android:layout_height="31dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/button_design"
+                        android:clickable="true"
+                        android:text="Asian" />
+
+                    <Button
+                        android:id="@+id/viewmore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="31dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/button_design"
+                        android:clickable="true"
                         android:text="View more" />
 
                 </LinearLayout>
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/contentLayout"
+                    android:layout_width="400dp"
+                    android:layout_height="300dp"
+                    android:orientation="horizontal"
+                    android:padding="16dp" />
             </HorizontalScrollView>
 
         </LinearLayout>
 
     </ScrollView>
 
+    <!-- 하단 아이콘 (홈, 검색, 프로필) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/home" />
+
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="140dp"
+            android:src="@drawable/search" />
+
+        <ImageView
+            android:id="@+id/profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="145dp"
+            android:src="@drawable/profile" />
+
     </LinearLayout>
+</LinearLayout>

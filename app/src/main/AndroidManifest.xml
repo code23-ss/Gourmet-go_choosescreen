@@ -42,6 +42,7 @@
         <activity android:name=".BookingConfirmationActivity"/>
         <activity android:name=".Jeju_RestaurantActivity" />
         <activity android:name=".RestaurantDetailsActivity" />
+        <activity android:name=".FullScreenImageActivity"/>
 
         <activity
             android:name=".MainActivity"

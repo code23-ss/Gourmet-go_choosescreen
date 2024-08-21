@@ -1,4 +1,4 @@
-package com.example.mainscreen;
+/*package com.example.mainscreen;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.mainscreen.RestaurantDetail;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -155,3 +156,4 @@ public class BookActivity extends AppCompatActivity {
         return gson.fromJson(json, listType);
     }
 }
+*/

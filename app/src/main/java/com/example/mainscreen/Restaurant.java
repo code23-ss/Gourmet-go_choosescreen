@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Restaurant {
+
+    private int viewType;
+
     @PropertyName("categories")
     private List<String> categories = new ArrayList<>();
 
@@ -49,6 +52,14 @@ public class Restaurant {
     public Restaurant() {}
 
     // Getters and Setters
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
+    }
 
     public List<String> getCategories() {
         return categories;

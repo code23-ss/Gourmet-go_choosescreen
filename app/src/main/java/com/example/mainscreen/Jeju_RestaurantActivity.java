@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Jeju_RestaurantActivity extends AppCompatActivity {
@@ -48,9 +49,11 @@ public class Jeju_RestaurantActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Restaurant> restaurantList) {
             if (restaurantList != null) {
-                // 어댑터 설정
-                RestaurantAdapter adapter = new RestaurantAdapter(Jeju_RestaurantActivity.this, restaurantList);
-                recyclerView.setAdapter(adapter);
+                // 고유 ID 리스트 생성
+                List<String> documentIdList = new ArrayList<>();
+                for (int i = 0; i < restaurantList.size(); i++) {
+                    documentIdList.add("jeju_restaurant_" + i); // 간단한 ID 생성
+                }
             } else {
                 // 오류 메시지 표시
                 Toast.makeText(Jeju_RestaurantActivity.this, "Failed to load restaurant data from JSON.", Toast.LENGTH_LONG).show();

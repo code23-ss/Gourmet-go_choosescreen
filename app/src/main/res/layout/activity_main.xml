@@ -5,22 +5,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <ScrollView
-        android:fillViewport="true"
-        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <!-- 첫째줄 (위치 변경 기능) -->
             <LinearLayout
@@ -29,9 +29,9 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:src="@drawable/location"
                     android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    android:src="@drawable/location" />
 
                 <Spinner
                     android:id="@+id/spinner"
@@ -64,11 +64,13 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="100dp"
                     android:layout_height="150dp"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/book"
                         android:layout_width="80dp"
@@ -77,90 +79,102 @@
                         android:padding="15dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/book"
+                        android:onClick="openRestaurantsActivity"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:gravity="center"
                         android:text="Book"
-                        android:textSize="15dp"
-                        android:gravity="center" />
+                        android:textSize="15dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="100dp"
                     android:layout_height="150dp"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/wait"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@drawable/button_design_oval"
                         android:padding="15dp"
                         android:scaleType="centerCrop"
-                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/wait"
+                        android:onClick="openWaitActivity"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:src="@drawable/wait"/>
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:text="Wait"
-                        android:textSize="15dp"
+                        android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:layout_marginLeft="10dp"/>
+                        android:text="Wait"
+                        android:textSize="15dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="100dp"
                     android:layout_height="150dp"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/hotdeals"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@drawable/button_design_oval"
                         android:padding="10dp"
                         android:scaleType="centerCrop"
-                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/hotdeals"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:src="@drawable/hotdeals"/>
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:text="Hot Deals"
-                        android:textSize="15dp"
+                        android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:layout_marginLeft="10dp"/>
+                        android:text="Hot Deals"
+                        android:textSize="15dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="100dp"
                     android:layout_height="150dp"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/guide"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@drawable/button_design_oval"
                         android:padding="5dp"
                         android:scaleType="centerCrop"
-                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/guide"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:src="@drawable/guide"/>
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:text="Guide"
-                        android:textSize="15dp"
+                        android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:layout_marginLeft="10dp"/>
+                        android:text="Guide"
+                        android:textSize="15dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -169,6 +183,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -179,130 +194,12 @@
                     android:textSize="24sp" />
             </LinearLayout>
 
-            <HorizontalScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/restaurantsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:scrollbars="none">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design">
-
-                        <ImageView
-                            android:id="@+id/buddhasbelly"
-                            android:layout_width="300dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/buddhasbelly"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/buddhasbelly"
-                            android:text="Buddha's Belly"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/the_margaux_grill"
-                            android:layout_width="300dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/the_margaux_grill" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/the_margaux_grill"
-                            android:text="The Margaux Grill"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/daol_charcoal_grill"
-                            android:layout_width="300dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/daol_charcoal_grill"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/daol_charcoal_grill"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Daol Charcoal Grill"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:fontFamily="casual"/>
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/mobo_bar"
-                            android:layout_width="300dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/mobo_bar"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/mobo_bar"
-                            android:text="Mobo Bar"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                </LinearLayout>
-            </HorizontalScrollView>
+                android:scrollbars="none" />
 
             <!-- 여섯째줄 (미슐렝) -->
             <LinearLayout
@@ -315,305 +212,19 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="50dp"
                     android:fontFamily="sans-serif-smallcaps"
-                    android:text="Micheline Restaurants 2024"
+                    android:text="Michelin Restaurants 2024"
                     android:textSize="24sp" />
 
             </LinearLayout>
 
-            <HorizontalScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/michelin_restaurants_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:orientation="horizontal"
-                android:scrollbars="none">
+                android:scrollbars="none" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design">
-
-                        <ImageView
-                            android:id="@+id/samwongarden"
-                            android:layout_width="400dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/samwongarden"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:id="@+id/my_text_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/samwongarden"
-                            android:text="Samwon Garden"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/tounge_and_groove_joint"
-                            android:layout_width="400dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/tounge_and_groove_joint"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tounge_and_groove_joint"
-                            android:text="Tounge and Groove Joint"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/yuyuan"
-                            android:layout_width="400dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/yuyuan"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/yuyuan"
-                            android:text="Yuyuan"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/sool052"
-                            android:layout_width="400dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/sool052"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/sool052"
-                            android:text="Sool 052"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/anam"
-                            android:layout_width="400dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/anam"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/anam"
-                            android:text="ANAM"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/kwonsooksoo"
-                            android:layout_width="400dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/kwonsooksoo"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/kwonsooksoo"
-                            android:text="Kwonsooksoo"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/goodbab"
-                            android:layout_width="400dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/goodbab"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/goodbab"
-                            android:text="Goodbab"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/jinmi_pyeongyang_naengmyeon"
-                            android:layout_width="400dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/jinmi_pyeongyang_naengmyeon"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/jinmi_pyeongyang_naengmyeon"
-                            android:text="Jinmi Pyeongyang Naengmyeon"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/momoyama"
-                            android:layout_width="400dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/momoyama"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/momoyama"
-                            android:text="Momoyama"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/button_design"
-                        android:layout_marginLeft="10dp">
-
-                        <ImageView
-                            android:id="@+id/doughroom"
-                            android:layout_width="400dp"
-                            android:layout_height="250dp"
-                            android:background="@drawable/round"
-                            android:clipToOutline="true"
-                            android:src="@drawable/doughroom"
-                            android:scaleType="centerCrop"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/doughroom"
-                            android:text="Doughroom"
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="casual"
-                            />
-
-                    </RelativeLayout>
-                </LinearLayout>
-            </HorizontalScrollView>
 
             <!-- 일곱째줄 (지역구별 식당) -->
 
@@ -643,115 +254,268 @@
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/new_gangnam_card_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginLeft="10dp"
+                        android:onClick="openRestaurantsActivity"
+                        android:tag="categories/Location/Subcategories/Seoul/Gangnam"
+                        app:cardCornerRadius="10dp">
 
-                        <ImageView
-                            android:layout_width="200dp"
-                            android:layout_height="200dp"
-                            android:src="@drawable/jamsil" />
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:alpha="0.6"
+                                android:src="@drawable/new_gangnam" />
+
+                            <TextView
+                                android:id="@+id/new_gangnam"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Gangnam"
+                                android:textColor="#FFFFFF"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/new_gwanghwamun_card_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginLeft="10dp"
+                        android:onClick="openRestaurantsActivity"
+                        android:tag="categories/Location/Subcategories/Seoul/Gwanghwamun"
+                        app:cardCornerRadius="10dp">
 
-                        <ImageView
-                            android:layout_width="200dp"
-                            android:layout_height="203dp"
-                            android:src="@drawable/gangnam" />
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:alpha="0.7"
+                                android:src="@drawable/new_gwanghwamun" />
+
+                            <TextView
+                                android:id="@+id/new_gwanghwamun"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Gwang\nHwamun"
+                                android:textColor="#FFFFFF"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/new_hongdae_card_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-                        <ImageView
-                            android:src="@drawable/gwanghuamun"
-                            android:layout_width="200dp"
-                            android:layout_height="200dp" />
+                        android:layout_marginLeft="10dp"
+                        android:onClick="openRestaurantsActivity"
+                        android:tag="categories/Location/Subcategories/Seoul/Hongdae"
+                        app:cardCornerRadius="10dp">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:alpha="0.6"
+                                android:src="@drawable/new_hongdae" />
+
+                            <TextView
+                                android:id="@+id/new_hongdae"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Hongdae"
+                                android:textColor="#FFFFFF"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/new_insadong_card_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-                        <ImageView
-                            android:src="@drawable/hannamdong"
-                            android:layout_width="200dp"
-                            android:layout_height="200dp" />
+                        android:layout_marginLeft="10dp"
+                        android:onClick="openRestaurantsActivity"
+                        android:tag="categories/Location/Subcategories/Seoul/Insadong"
+                        app:cardCornerRadius="10dp">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:alpha="0.7"
+                                android:src="@drawable/new_insadong" />
+
+                            <TextView
+                                android:id="@+id/new_insadong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Insadong"
+                                android:textColor="#FFFFFF"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/new_itaewon_card_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="openRestaurantsActivity"
+                        android:tag="categories/Location/Subcategories/Seoul/Itaewon"
+                        app:cardCornerRadius="10dp">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:alpha="0.7"
+                                android:src="@drawable/new_itaewon" />
+
+                            <TextView
+                                android:id="@+id/new_itaewon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Itaewon"
+                                android:textColor="#FFFFFF"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/new_jamsil_card_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-                        <ImageView
-                            android:layout_width="200dp"
-                            android:layout_height="200dp"
-                            android:src="@drawable/hongdae" />
+                        android:layout_marginLeft="10dp"
+                        android:onClick="openRestaurantsActivity"
+                        android:tag="categories/Location/Subcategories/Seoul/Jamsil"
+                        app:cardCornerRadius="10dp">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:alpha="0.7"
+                                android:src="@drawable/new_jamsil" />
+
+                            <TextView
+                                android:id="@+id/new_jamsil"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Jamsil"
+                                android:textColor="#FFFFFF"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/new_myeongdong_card_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-                        <ImageView
-                            android:layout_width="200dp"
-                            android:layout_height="200dp"
-                            android:src="@drawable/insadong" />
+                        android:layout_marginLeft="10dp"
+                        android:onClick="openRestaurantsActivity"
+                        android:tag="categories/Location/Subcategories/Seoul/Myeongdong"
+                        app:cardCornerRadius="10dp">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:alpha="0.7"
+                                android:src="@drawable/new_myeongdong" />
+
+                            <TextView
+                                android:id="@+id/new_myeongdong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Myeong\ndong"
+                                android:textColor="#FFFFFF"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/new_seongsu_card_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-                        <ImageView
-                            android:layout_width="200dp"
-                            android:layout_height="200dp"
-                            android:src="@drawable/itaewon" />
-                    </androidx.cardview.widget.CardView>
+                        android:layout_marginLeft="10dp"
+                        android:onClick="openRestaurantsActivity"
+                        android:tag="categories/Location/Subcategories/Seoul/Seongsu"
+                        app:cardCornerRadius="10dp">
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-                        <ImageView
-                            android:layout_width="200dp"
-                            android:layout_height="200dp"
-                            android:src="@drawable/myeongdong" />
-                    </androidx.cardview.widget.CardView>
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-                        <ImageView
-                            android:layout_width="200dp"
-                            android:layout_height="200dp"
-                            android:src="@drawable/seongsu" />
-                    </androidx.cardview.widget.CardView>
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:alpha="0.7"
+                                android:src="@drawable/new_seongsu" />
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginLeft="10dp">
-                        <ImageView
-                            android:layout_width="200dp"
-                            android:layout_height="200dp"
-                            android:src="@drawable/yeouido" />
+                            <TextView
+                                android:id="@+id/new_seongsu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Seongsu"
+                                android:textColor="#FFFFFF"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
             </HorizontalScrollView>
@@ -772,10 +536,10 @@
             </LinearLayout>
 
             <HorizontalScrollView
+                android:id="@+id/horizontal_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:id="@+id/horizontal_scroll_view">
+                android:scrollbars="none">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -783,66 +547,66 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:clickable="true"
+                        android:id="@+id/korean"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:background="@drawable/button_design"
-                        android:text="Korean"
-                        android:id="@+id/korean"/>
+                        android:clickable="true"
+                        android:text="Korean" />
 
                     <Button
-                        android:clickable="true"
+                        android:id="@+id/chinese"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/button_design"
-                        android:text="Chinese"
-                        android:id="@+id/chinese"/>
+                        android:clickable="true"
+                        android:text="Chinese" />
 
                     <Button
-                        android:clickable="true"
+                        android:id="@+id/italian"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/button_design"
-                        android:text="Italian"
-                        android:id="@+id/italian"/>
+                        android:clickable="true"
+                        android:text="Italian" />
 
                     <Button
-                        android:clickable="true"
+                        android:id="@+id/japanese"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/button_design"
-                        android:text="Japanese"
-                        android:id="@+id/japanese"/>
+                        android:clickable="true"
+                        android:text="Japanese" />
 
                     <Button
-                        android:clickable="true"
+                        android:id="@+id/fusion"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/button_design"
-                        android:text="Fushion"
-                        android:id="@+id/fushion"/>
+                        android:clickable="true"
+                        android:text="Fusion" />
 
                     <Button
-                        android:clickable="true"
+                        android:id="@+id/asian"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/button_design"
-                        android:text="Asian"
-                        android:id="@+id/asian"/>
+                        android:clickable="true"
+                        android:text="Asian" />
 
                     <Button
-                        android:clickable="true"
+                        android:id="@+id/viewmore"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/button_design"
-                        android:text="View more"
-                        android:id="@+id/viewmore"/>
+                        android:clickable="true"
+                        android:text="View more" />
 
                 </LinearLayout>
             </HorizontalScrollView>
@@ -850,8 +614,8 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="none"
-                android:scaleType="centerCrop">
+                android:scaleType="centerCrop"
+                android:scrollbars="none">
 
                 <LinearLayout
                     android:id="@+id/contentLayout"
@@ -869,8 +633,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/home"
@@ -891,7 +655,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="145dp"
-            android:src="@drawable/profile"/>
+            android:src="@drawable/profile" />
 
     </LinearLayout>
 </LinearLayout>

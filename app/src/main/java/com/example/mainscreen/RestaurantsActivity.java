@@ -3,6 +3,7 @@ package com.example.mainscreen;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,52 +35,81 @@ public class RestaurantsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Intent로부터 locationPath와 matchType 값을 가져오기
+        String locationPath = getIntent().getStringExtra("locationPath");
+        String matchType = getIntent().getStringExtra("matchType");
+        Log.d(TAG, "Received in RestaurantsActivity - locationPath: " + locationPath + ", matchType: " + matchType);
+
         // Firestore에서 데이터 비동기적으로 읽기
-        loadRestaurantsFromFirestore();
+        loadRestaurantsFromFirestore(locationPath, matchType);
     }
 
-    private void loadRestaurantsFromFirestore() {
+    //*카드뷰 수정사항 반영 load~Firestore()
+    private void loadRestaurantsFromFirestore(String locationPath, String matchType) {
+
+        Log.d(TAG, "Received locationPath: " + locationPath);
+        Log.d(TAG, "Received matchType: " + matchType);
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String locationPath = "categories/Location/Subcategories/Seoul";
 
         db.collection("restaurants")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<Restaurant> restaurantList = new ArrayList<>();
+                        List<String> documentIdList = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            // 각 문서의 category_ids 필드 가져오기
                             List<DocumentReference> categoryIds = (List<DocumentReference>) document.get("category_ids");
 
-                            // category_ids에서 locationPath로 시작하는 경로가 있는지 확인
-                            boolean matchesLocation = false;
-                            for (DocumentReference ref : categoryIds) {
-                                if (ref.getPath().startsWith(locationPath)) {
-                                    matchesLocation = true;
-                                    break;
+                            // 각 문서의 ID와 category_ids 로그 출력
+                            Log.d(TAG, "Document ID: " + document.getId());
+                            Log.d(TAG, "Category IDs: " + categoryIds);
+
+                            boolean matches = false;
+
+                            // matchType에 따라 처리 방식 결정
+                            if ("exactMatch".equals(matchType)) {
+                                for (DocumentReference ref : categoryIds) {
+                                    Log.d(TAG, "Checking exact match for: " + ref.getPath() + " against " + locationPath);
+                                    if (ref.getPath().equals(locationPath)) {
+                                        matches = true;
+                                        break;
+                                    }
+                                }
+                            } else if ("startsWith".equals(matchType)) {
+                                for (DocumentReference ref : categoryIds) {
+                                    Log.d(TAG, "Checking startsWith match for: " + ref.getPath() + " against " + locationPath);
+                                    if (ref.getPath().startsWith(locationPath)) {
+                                        matches = true;
+                                        break;
+                                    }
                                 }
                             }
 
-                            // locationPath에 해당하는 문서만 리스트에 추가
-                            if (matchesLocation) {
+                            if (matches) {
                                 Restaurant restaurant = document.toObject(Restaurant.class);
-
-                                // 로그 추가: name 및 imagePath 확인
-                                Log.d(TAG, "Restaurant Name: " + restaurant.getName());
-                                Log.d(TAG, "Restaurant Image Paths: " + restaurant.getImagePath());
-
                                 restaurantList.add(restaurant);
+                                documentIdList.add(document.getId()); // 문서 ID 추가
                             }
+                        }
+                            // 매칭된 레스토랑의 수 로그 출력
+                            Log.d(TAG, "Matched restaurants count: " + restaurantList.size());
+
+
+                        if (restaurantList.isEmpty()) {
+                            Log.w(TAG, "No restaurants matched the criteria.");
+                        }else {
+                            Log.d(TAG, "Matched restaurants count: " + restaurantList.size());
                         }
 
                         // RecyclerView 어댑터 설정
-                        RestaurantAdapter adapter = new RestaurantAdapter(RestaurantsActivity.this, restaurantList);
+                        RestaurantAdapter adapter = new RestaurantAdapter(RestaurantsActivity.this, restaurantList, documentIdList);
                         recyclerView.setAdapter(adapter);
                     } else {
-                        // 오류 메시지 표시
                         Toast.makeText(RestaurantsActivity.this, "Failed to load restaurant data from Firestore.", Toast.LENGTH_LONG).show();
                         Log.e(TAG, "Error getting documents: ", task.getException());
                     }
+
                 });
     }
 }
