@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +44,7 @@ import java.util.Map;
 public class RestaurantDetailsActivity extends AppCompatActivity {
 
     private boolean isHoursExpanded = false;
+    private Button buttonBook, buttonWait;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,6 +204,37 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                 }).addOnFailureListener(e -> {
                     Log.d("Firestore", "get failed with ", e);
                 });
+
+        buttonBook = findViewById(R.id.button_book);
+        buttonWait = findViewById(R.id.button_wait);
+
+        // 기본적으로 두 버튼을 모두 표시
+        buttonBook.setVisibility(View.VISIBLE);
+        buttonWait.setVisibility(View.VISIBLE);
+
+        // 메인 화면에서 전달된 인텐트 데이터 확인
+        String showButton = getIntent().getStringExtra("SHOW_BUTTON");
+        Log.d("RestaurantDetailsActivity", "SHOW_BUTTON value: " + showButton);
+        if ("BOOK".equals(showButton)) {
+            buttonWait.setVisibility(View.GONE); // Wait 버튼 숨기기
+        } else if ("WAIT".equals(showButton)) {
+            buttonBook.setVisibility(View.GONE); // Book 버튼 숨기기
+        }
+
+        buttonBook.setOnClickListener(v -> {
+            // Booking 버튼 클릭 시 Book2Activity로 이동
+            Intent bookintent = new Intent(RestaurantDetailsActivity.this, Book2Activity.class);
+            bookintent.putExtra("restaurant_id", restaurantId); // 문서 ID 전달
+            startActivity(bookintent);
+        });
+
+        buttonWait.setOnClickListener(v -> {
+            // Wait 버튼 클릭 시 WaitActivity2로 이동
+            Intent waitintent = new Intent(RestaurantDetailsActivity.this, WaitActivity2.class);
+            waitintent.putExtra("restaurant_id", restaurantId); // 문서 ID 전달
+            startActivity(waitintent);
+        });
+
     }
 
     private String calculateCurrentStatus(String currentTime, String open, String close, String breakStart, String breakEnd) {

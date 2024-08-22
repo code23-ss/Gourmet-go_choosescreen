@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/email_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/password_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_below="@id/email_edit_text"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/warning_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please be aware that deleting your account will remove all your personal data and it cannot be recovered. Your reviews will not be deleted but will be displayed under the name (Unknown). For more details, please refer to our Privacy Policy."
+        android:textColor="#FF0000"
+        android:textSize="14sp"
+        android:layout_below="@id/password_edit_text"
+        android:layout_marginBottom="16dp"
+        android:background="#F2F2F2"
+        android:padding="8dp"/>
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Account"
+        android:background="#E24443"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_below="@id/warning_text" />
+
+</RelativeLayout>

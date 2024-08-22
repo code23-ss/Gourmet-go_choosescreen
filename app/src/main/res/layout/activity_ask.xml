@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="@android:color/white">
+
+    <!-- 문의사항 입력할 텍스트 상자 -->
+    <EditText
+        android:id="@+id/inquiry_input"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:hint="Write your inquiry here..."
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:background="@android:drawable/edit_text"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 제출 버튼 -->
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_gravity="center"
+        android:background="#E24443"
+        android:textColor="#FFFFFF"/>
+
+</LinearLayout>

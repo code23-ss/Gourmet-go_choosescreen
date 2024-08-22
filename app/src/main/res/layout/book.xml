@@ -291,12 +291,14 @@
                 android:layout_marginBottom="20dp">
 
                 <Button
+                    android:id="@+id/button_book"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:backgroundTint="#FFDC3C"
                     android:text="Book" />
 
                 <Button
+                    android:id="@+id/button_wait"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:backgroundTint="#FFDC3C"

@@ -15,27 +15,48 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.List;
 
 public class BookingConfirmationActivity extends AppCompatActivity {
 
-    private TextView bookingId, bookingAddress, partySize, date, time, contactInfo;
+    private TextView bookingId, bookingName, bookingAddress, partySize, date, time, contactInfo;
     private LinearLayout btnCancelReservation, btnCallRestaurant;
     private Button btnConfirm;
+    private ImageView bookingImage;
+
+    private FirebaseFirestore firestore;
+    private FirebaseStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_confirmation);
 
+        // Initialize Firebase Firestore and Storage
+        firestore = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+
+        // Initialize UI components
         bookingId = findViewById(R.id.booking_id);
         bookingAddress = findViewById(R.id.booking_address);
+        bookingName = findViewById(R.id.booking_name);
         partySize = findViewById(R.id.party_size);
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
@@ -43,76 +64,153 @@ public class BookingConfirmationActivity extends AppCompatActivity {
         btnCancelReservation = findViewById(R.id.btn_cancel_reservation);
         btnCallRestaurant = findViewById(R.id.btn_call_restaurant);
         btnConfirm = findViewById(R.id.btn_confirm);
+        bookingImage = findViewById(R.id.booking_image);
 
-        // Set data from server
-        bookingId.setText("Booking ID: US9YD"); // Replace with data from server(서버 수정 부분)
-        bookingAddress.setText("15 Stamford (The Capitol Kempinski Hotel Singapore)\n15 Stamford Road The Capitol Kempinski Hotel Singapore (178906)");
-        partySize.setText("Party Size: 2 Adults");
-        date.setText("Date: 9 Aug, Fri");
-        time.setText("Time: 12:00 PM");
-        contactInfo.setText("Ms. 김 유진\n+82 1028702298 · jinbe47@naver.com");
+        // Get data from Intent
+        String reservationId = getIntent().getStringExtra("reservation_id");
+        String restaurantId = getIntent().getStringExtra("restaurant_id");
+        String Path = getIntent().getStringExtra("path");
 
-        // Create spannable string with image span
-        String text = bookingAddress.getText().toString();
-        SpannableString spannableString = new SpannableString(text + "  ");
+        // Set booking ID
+        bookingId.setText("Booking ID: " + reservationId);
 
-        // Create spannable string with image span
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_copy_holo_light);
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 40, 40, true); // 크기 조정
-        Drawable drawable = new BitmapDrawable(getResources(), resizedBitmap);
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        // Load reservation details
+        loadReservationDetails(reservationId);
 
-        //이미지 스팬 생성
-        ImageSpan imageSpan = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
-        int start = text.length() + 1;
-        int end = start + 1;
-        spannableString.setSpan(imageSpan, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        // Load restaurant details
+        loadRestaurantDetails(restaurantId);
 
-        //접근성 텍스트 추가 및 클릭 이벤트 처리
-        spannableString.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("Address", bookingAddress.getText().toString());
-                clipboard.setPrimaryClip(clip);
-                // Notify user that address has been copied
-                Toast.makeText(BookingConfirmationActivity.this, "Copied", Toast.LENGTH_SHORT).show();
-            }
+        // Handle reservation cancellation
+        btnCancelReservation.setOnClickListener(v -> showCancelConfirmationDialog(reservationId));
 
-            @Override
-            public void updateDrawState(TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setUnderlineText(false); // 밑줄 제거
-            }
-        }, start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        bookingAddress.setText(spannableString);
-        bookingAddress.setMovementMethod(LinkMovementMethod.getInstance());
+        // Handle restaurant contact copy
+        btnCallRestaurant.setOnClickListener(v -> copyRestaurantContact(restaurantId));
 
-        btnCancelReservation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 예약 취소 처리
-            }
-        });
-
-        btnCallRestaurant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("Restaurant Contact", "+82 1028702298");
-                clipboard.setPrimaryClip(clip);
-                // Notify user that contact has been copied
-                Toast.makeText(BookingConfirmationActivity.this, "Copied", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Redirect to main.xml
+        // Handle confirmation button click
+        btnConfirm.setOnClickListener(v -> {
+            if ("booking".equals(Path)) {
+                // Booking 경로에서 온 경우
                 Intent intent = new Intent(BookingConfirmationActivity.this, MainActivity.class);
                 startActivity(intent);
             }
+            finish();
         });
+    }
+    private void loadReservationDetails(String reservationId) {
+        firestore.collection("reservations").document(reservationId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Long peopleLong = documentSnapshot.getLong("people");  // `Long` 타입으로 가져옴
+                        String reservationDate = documentSnapshot.getString("date");
+                        String reservationTime = documentSnapshot.getString("time");
+                        String title = documentSnapshot.getString("title");
+                        String firstName = documentSnapshot.getString("firstName");
+                        String lastName = documentSnapshot.getString("lastName");
+                        String mobileNumber = documentSnapshot.getString("mobileNumber");
+                        String email = documentSnapshot.getString("email");
+
+                        int people = peopleLong != null ? peopleLong.intValue() : 0;  // `Long`에서 `int`로 변환
+                        reservationDate = reservationDate != null ? reservationDate : "N/A";
+                        reservationTime = reservationTime != null ? reservationTime : "N/A";
+                        title = title != null ? title : "";
+                        firstName = firstName != null ? firstName : "";
+                        lastName = lastName != null ? lastName : "";
+                        mobileNumber = mobileNumber != null ? mobileNumber : "N/A";
+                        email = email != null ? email : "N/A";
+
+                        partySize.setText(people + " People");
+                        date.setText(reservationDate);
+                        time.setText(reservationTime);
+                        contactInfo.setText(title + " " + firstName + " " + lastName + "\n" + mobileNumber + " · " + email);
+                    } else {
+                        Toast.makeText(BookingConfirmationActivity.this, "예약 정보를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(BookingConfirmationActivity.this, "예약 정보를 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+    }
+
+
+    private void loadRestaurantDetails(String restaurantId) {
+        firestore.collection("restaurants").document(restaurantId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String location = documentSnapshot.getString("location");
+                        bookingAddress.setText(location != null ? location : "unknown address");
+
+                        String name = documentSnapshot.getString("name");
+                        bookingName.setText(name != null ? name : "unknown name");
+
+                        // imagePath가 List<String> 형태일 때 처리
+                        Object imagePathObject = documentSnapshot.get("imagePath");
+
+                        if (imagePathObject instanceof List) {
+                            List<String> imagePathList = (List<String>) imagePathObject;
+                            if (!imagePathList.isEmpty()) {
+                                String imagePath = imagePathList.get(0); // 첫 번째 이미지 경로만 사용
+                                loadRestaurantImage(imagePath);
+                            } else {
+                                Log.e("BookingConfirmation", "imagePath list is empty.");
+                                Toast.makeText(BookingConfirmationActivity.this, "imagePath list is empty.", Toast.LENGTH_SHORT).show();
+                                bookingImage.setImageResource(R.drawable.default_image); // 기본 이미지 설정
+                            }
+                        } else {
+                            Log.e("BookingConfirmation", "imagePath is not a List<String>: " + imagePathObject);
+                            Toast.makeText(BookingConfirmationActivity.this, "imagePath is not a List<String>: ", Toast.LENGTH_SHORT).show();
+                            bookingImage.setImageResource(R.drawable.default_image); // 기본 이미지 설정
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(BookingConfirmationActivity.this, "Failed to load restaurant details.", Toast.LENGTH_SHORT).show());
+    }
+
+
+    private void loadRestaurantImage(String imagePath) {
+        StorageReference storageReference = storage.getReference().child(imagePath);
+        storageReference.getDownloadUrl().addOnSuccessListener(uri -> Glide.with(this).load(uri).into(bookingImage))
+                .addOnFailureListener(e -> Toast.makeText(BookingConfirmationActivity.this, "Failed to load image.", Toast.LENGTH_SHORT).show());
+    }
+
+    private void cancelReservation(String reservationId) {
+        firestore.collection("reservations").document(reservationId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(BookingConfirmationActivity.this, "Reservation canceled.", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .addOnFailureListener(e -> Toast.makeText(BookingConfirmationActivity.this, "Failed to cancel reservation.", Toast.LENGTH_SHORT).show());
+    }
+
+    private void showCancelConfirmationDialog(String reservationId) {
+        // AlertDialog.Builder를 사용해 대화상자를 구성
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Reservation Canceled")
+                .setMessage("Are you sure you want to cancel?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    // 확인 버튼을 눌렀을 때 예약 삭제
+                    cancelReservation(reservationId);
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    // 취소 버튼을 눌렀을 때 대화상자 닫기
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+    private void copyRestaurantContact(String restaurantId) {
+        firestore.collection("restaurants").document(restaurantId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String contactNumber = documentSnapshot.getString("contact_number");
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("Restaurant Contact", contactNumber);
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(BookingConfirmationActivity.this, "Copied", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(BookingConfirmationActivity.this, "Failed to copy contact number.", Toast.LENGTH_SHORT).show());
     }
 }

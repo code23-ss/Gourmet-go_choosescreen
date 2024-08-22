@@ -39,13 +39,15 @@
             android:value="true" />
 
         <activity android:name=".RestaurantsActivity" />
+        <activity android:name=".WaitActivity"/>
+        <activity android:name=".Book2Activity"/>
+        <activity android:name=".WaitActivity2"/>
         <activity android:name=".BookingConfirmationActivity"/>
-        <activity android:name=".Jeju_RestaurantActivity" />
         <activity android:name=".RestaurantDetailsActivity" />
         <activity android:name=".FullScreenImageActivity"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".MainscreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,12 +56,20 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".SecondClassActivity"
+            android:exported="true" />
+        <activity android:name=".MyReservationActivity"/>
+        <activity android:name=".CreateAccountActivity"/>
+        <activity android:name=".ForgotIDActivity"/>
+        <activity android:name=".ForgotIDActivity2"/>
+        <activity android:name=".ForgotPasswordActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".ProfileActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".BusanActivity"/>
         <activity android:name=".JejuActivity" />
-        <activity android:name=".BookActivity"/>
-        <activity android:name=".WaitActivity"/>
         <activity android:name=".HotdealsActivity"/>
         <activity android:name=".GuideActivity"/>
 

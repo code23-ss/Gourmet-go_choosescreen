@@ -489,9 +489,11 @@ public class BusanActivity extends AppCompatActivity implements AdapterView.OnIt
         // 각각의 RecyclerView에 대해 별도의 어댑터 인스턴스 생성
         List<Restaurant> topRestaurantList = new ArrayList<>();
         List<Restaurant> michelinRestaurantList = new ArrayList<>();
+        List<String> topRestaurantIds = new ArrayList<>();
+        List<String> michelinRestaurantIds = new ArrayList<>();
 
-        MainRestaurantAdapter topRestaurantAdapter = new MainRestaurantAdapter(this, topRestaurantList);
-        MainRestaurantAdapter michelinRestaurantAdapter = new MainRestaurantAdapter(this, michelinRestaurantList);
+        MainRestaurantAdapter topRestaurantAdapter = new MainRestaurantAdapter(this, topRestaurantList, topRestaurantIds);
+        MainRestaurantAdapter michelinRestaurantAdapter = new MainRestaurantAdapter(this, michelinRestaurantList, michelinRestaurantIds);
 
         topRestaurantRecyclerView.setAdapter(topRestaurantAdapter);
         michelinRestaurantRecyclerView.setAdapter(michelinRestaurantAdapter);
@@ -511,6 +513,7 @@ public class BusanActivity extends AppCompatActivity implements AdapterView.OnIt
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<Restaurant> topRestaurantList = new ArrayList<>();
+                        List<String> topRestaurantIds = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             List<DocumentReference> categoryIds = (List<DocumentReference>) document.get("category_ids");
                             boolean matchesBusan = false;
@@ -533,7 +536,7 @@ public class BusanActivity extends AppCompatActivity implements AdapterView.OnIt
                         }
 
                         // Pass the filtered data to the adapter
-                        adapter.updateData(topRestaurantList);
+                        adapter.updateData(topRestaurantList, topRestaurantIds);
                     } else {
                         Log.w("Firestore", "Error getting documents.", task.getException());
                     }
@@ -550,6 +553,7 @@ public class BusanActivity extends AppCompatActivity implements AdapterView.OnIt
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<Restaurant> michelinRestaurantList = new ArrayList<>();
+                        List<String> michelinRestaurantIds = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             List<DocumentReference> categoryIds = (List<DocumentReference>) document.get("category_ids");
                             boolean matchesBusan = false;
@@ -572,7 +576,7 @@ public class BusanActivity extends AppCompatActivity implements AdapterView.OnIt
                         }
 
                         // Pass the filtered data to the adapter
-                        adapter.updateData(michelinRestaurantList);
+                        adapter.updateData(michelinRestaurantList, michelinRestaurantIds);
                     } else {
                         Log.w("Firestore", "Error getting documents.", task.getException());
                     }

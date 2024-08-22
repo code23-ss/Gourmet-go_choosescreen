@@ -45,14 +45,16 @@ public class WaitActivity extends AppCompatActivity {
         // Intent로부터 locationPath와 matchType 값을 가져오기
         String locationPath = getIntent().getStringExtra("locationPath");
         String matchType = getIntent().getStringExtra("matchType");
+        String showButton = getIntent().getStringExtra("SHOW_BUTTON");
         Log.d(TAG, "Received in WaitActivity - locationPath: " + locationPath + ", matchType: " + matchType);
+        Log.d(TAG, "Received in WaitActivity - SHOW_BUTTON: " + showButton);
 
         // Firestore에서 데이터 비동기적으로 읽기
-        loadRestaurantsFromFirestore(locationPath, matchType);
+        loadRestaurantsFromFirestore(locationPath, matchType, showButton);
     }
 
     //*카드뷰 수정사항 반영 load~Firestore()
-    private void loadRestaurantsFromFirestore(String locationPath, String matchType) {
+    private void loadRestaurantsFromFirestore(String locationPath, String matchType, String showButton) {
 
         Log.d(TAG, "Received locationPath: " + locationPath);
         Log.d(TAG, "Received matchType: " + matchType);
@@ -90,7 +92,7 @@ public class WaitActivity extends AppCompatActivity {
                                     }
                                 }
                             }
-
+                            Log.d(TAG, "Does it match? " + matches);
                             if (matches) {
                                 // 요일 및 현재 시간 확인
                                 String currentDay = getCurrentDay();
@@ -122,8 +124,7 @@ public class WaitActivity extends AppCompatActivity {
                         }
 
                         // RecyclerView 어댑터 설정
-                        RestaurantAdapter adapter = new RestaurantAdapter(WaitActivity.this, restaurantList, documentIdList);
-                        recyclerView.setAdapter(adapter);
+                        recyclerView.setAdapter(new RestaurantAdapter(WaitActivity.this, restaurantList, documentIdList, showButton));
                     } else {
                         Toast.makeText(WaitActivity.this, "Failed to load restaurant data from Firestore.", Toast.LENGTH_LONG).show();
                         Log.e(TAG, "Error getting documents: ", task.getException());
@@ -157,6 +158,9 @@ public class WaitActivity extends AppCompatActivity {
             Date current = sdf.parse(currentTime);
             Date openTime = sdf.parse(open);
             Date closeTime = sdf.parse(close);
+
+            Log.d(TAG, "Checking if restaurant is open. Current Time: " + currentTime + ", Open: " + open + ", Close: " + close);
+
 
             // 자정을 넘는 경우 처리
             if (closeTime.before(openTime)) {

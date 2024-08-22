@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- People Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="People"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:padding="8dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:background="#E24443"
+                android:textColor="#FFFFFF" />
+
+            <RadioGroup
+                android:id="@+id/radioGrouppeople"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radiopeople1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1" />
+                <RadioButton
+                    android:id="@+id/radiopeople2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:checked="true"/>
+                <RadioButton
+                    android:id="@+id/radiopeople3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3" />
+                <RadioButton
+                    android:id="@+id/radiopeople4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4" />
+                <RadioButton
+                    android:id="@+id/radiopeople5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5" />
+                <RadioButton
+                    android:id="@+id/radiopeople6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6" />
+                <RadioButton
+                    android:id="@+id/radiopeopleCustom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Custom" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/editTextCustompeople"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter number of People"
+                android:inputType="number"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Date & Time Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date and Time"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:padding="8dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:layout_marginBottom="16dp"
+                android:background="#E24443"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/datePickerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Date" />
+
+            <Button
+                android:id="@+id/timePickerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Time" />
+        </LinearLayout>
+
+        <!-- Title Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:padding="8dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:background="#E24443"
+            android:textColor="#FFFFFF" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/radioMr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mr."
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/radioMs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ms." />
+            <RadioButton
+                android:id="@+id/radioMrs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mrs." />
+            <RadioButton
+                android:id="@+id/radioMdm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mdm." />
+            <RadioButton
+                android:id="@+id/radioDr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dr." />
+            <RadioButton
+                android:id="@+id/radioMx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mx." />
+        </RadioGroup>
+
+        <!-- Name Inputs -->
+        <EditText
+            android:id="@+id/editTextFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="First name"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/editTextLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last name"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Mobile Number -->
+        <EditText
+            android:id="@+id/editTextMobileNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mobile number"
+            android:inputType="phone"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Email -->
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Special Requests -->
+        <EditText
+            android:id="@+id/editTextSpecialRequests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter any special requests here"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Updates Checkbox -->
+        <CheckBox
+            android:id="@+id/checkBoxPersonal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I agree with the personal information collection and usage."
+            android:layout_marginBottom="16dp" />
+
+        <!-- Agreement -->
+        <CheckBox
+            android:id="@+id/checkBoxUpdates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="If you don't show up at the reserved time, there may be disadvantages."
+            android:layout_marginBottom="16dp" />
+
+        <!-- Continue Button -->
+        <Button
+            android:id="@+id/buttonContinue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Continue"
+            android:textSize="16dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:background="#E24443"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+</ScrollView>

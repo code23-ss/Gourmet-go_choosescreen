@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,19 +20,24 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> {
+public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> implements Filterable {
 
     private static final String TAG = "RestaurantAdapter";
     private List<Restaurant> restaurantList;
+    private List<Restaurant> filteredRestaurantList;
     private List<String> documentIdList;
     private Context context;
+    private String showButton;
 
-    public RestaurantAdapter(Context context, List<Restaurant> restaurantList, List<String> documentIdList) {
+    public RestaurantAdapter(Context context, List<Restaurant> restaurantList, List<String> documentIdList, String showButton) {
         this.context = context;
-        this.restaurantList = restaurantList;
+        this.restaurantList = new ArrayList<>(restaurantList);
+        this.filteredRestaurantList = new ArrayList<>(restaurantList);
         this.documentIdList = documentIdList;
+        this.showButton = showButton;
     }
 
     @Override
@@ -41,8 +48,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Restaurant restaurant = restaurantList.get(position);
-        String documentId = documentIdList.get(position); // 문서 ID 가져오기
+        Restaurant restaurant = filteredRestaurantList.get(position);
+        String documentId = documentIdList.get(position);
 
         // Name 설정
         holder.nameTextView.setText(restaurant.getName());
@@ -62,19 +69,18 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
             );
             params.setMargins(8, 0, 8, 0);
             imageView.setLayoutParams(params);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);  // 이미지를 꽉 차게 만듭니다.
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            loadImageFromStorage(imagePath, imageView);  // 이미지 로드 메서드 호출
+            loadImageFromStorage(imagePath, imageView);
 
-            // 이미지 클릭 시 세부 화면으로 이동하는 리스너 추가
             imageView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, RestaurantDetailsActivity.class);
-                intent.putExtra("restaurant_id", documentId); // 문서 ID를 전달
-                intent.putExtra("name", restaurant.getName());  // 레스토랑 이름 전달
-                intent.putExtra("imagePath", imagePath);  // 이미지 경로 전달
+                intent.putExtra("restaurant_id", documentId);
+                intent.putExtra("name", restaurant.getName());
+                intent.putExtra("imagePath", imagePath);
+                intent.putExtra("SHOW_BUTTON", showButton);
                 context.startActivity(intent);
 
-                // 로그 추가: Intent에 추가된 값 확인
                 Log.d(TAG, "Intent - ImagePath: " + imagePath + ", Name: " + restaurant.getName() + ", RestaurantId: " + documentId);
             });
 
@@ -84,7 +90,41 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return restaurantList.size();
+        return filteredRestaurantList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                FilterResults results = new FilterResults();
+                List<Restaurant> filteredList = new ArrayList<>();
+
+                if (filterPattern.isEmpty()) {
+                    filteredList.addAll(restaurantList);
+                } else {
+                    for (Restaurant item : restaurantList) {
+                        if (item.getName().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                }
+
+                results.values = filteredList;
+                results.count = filteredList.size();
+                return results;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredRestaurantList.clear();
+                filteredRestaurantList.addAll((List<Restaurant>) results.values);
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -103,12 +143,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         StorageReference storageRef = storage.getReference().child(imagePath);
 
         storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-
             if (context != null && !((Activity) context).isDestroyed()) {
                 Glide.with(context)
-                    .load(uri)
-                    .apply(new RequestOptions().override(500, 400))
-                    .into(imageView);
+                        .load(uri)
+                        .apply(new RequestOptions().override(500, 400))
+                        .into(imageView);
             } else {
                 Log.w(TAG, "Context is null or Activity is destroyed. Skipping image load.");
             }

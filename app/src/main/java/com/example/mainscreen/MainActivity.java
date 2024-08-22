@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public static final int TAG_LOCATION_PATH = R.id.location_path;
     public static final int TAG_MATCH_TYPE = R.id.match_type;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
         }
+
+
 
         // Firestore에서 데이터 로드 및 UI 업데이트
         loadRestaurantsFromFirestore();
@@ -443,9 +445,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (imageViewId == R.id.book) {
                     intent.putExtra("locationPath", locationPath);
                     intent.putExtra("matchType", matchType);
+                    intent.putExtra("SHOW_BUTTON", "BOOK");
+                    Log.d("MainActivity", "Sending SHOW_BUTTON: BOOK");
                 } else if(imageViewId == R.id.wait) {
                     intent.putExtra("locationPath", locationPath);
                     intent.putExtra("matchType", matchType);
+                    intent.putExtra("SHOW_BUTTON", "WAIT");
+                    Log.d("MainActivity", "Sending SHOW_BUTTON: WAIT");
                 }
 
                 startActivity(intent);
@@ -529,9 +535,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // 각각의 RecyclerView에 대해 별도의 어댑터 인스턴스 생성
         List<Restaurant> topRestaurantList = new ArrayList<>();
         List<Restaurant> michelinRestaurantList = new ArrayList<>();
+        List<String> topRestaurantIds = new ArrayList<>();
+        List<String> michelinRestaurantIds = new ArrayList<>();
 
-        MainRestaurantAdapter topRestaurantAdapter = new MainRestaurantAdapter(this, topRestaurantList);
-        MainRestaurantAdapter michelinRestaurantAdapter = new MainRestaurantAdapter(this, michelinRestaurantList);
+        MainRestaurantAdapter topRestaurantAdapter = new MainRestaurantAdapter(this, topRestaurantList, topRestaurantIds);
+        MainRestaurantAdapter michelinRestaurantAdapter = new MainRestaurantAdapter(this, michelinRestaurantList, michelinRestaurantIds);
 
         topRestaurantRecyclerView.setAdapter(topRestaurantAdapter);
         michelinRestaurantRecyclerView.setAdapter(michelinRestaurantAdapter);
@@ -551,6 +559,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<Restaurant> topRestaurantList = new ArrayList<>();
+                        List<String> topRestaurantIds = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             List<DocumentReference> categoryIds = (List<DocumentReference>) document.get("category_ids");
                             boolean matchesSeoul = false;
@@ -569,11 +578,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 Restaurant restaurant = document.toObject(Restaurant.class);
                                 restaurant.setViewType(MainRestaurantAdapter.VIEW_TYPE_TOP_RESTAURANT);
                                 topRestaurantList.add(restaurant);
+                                topRestaurantIds.add(document.getId());
                             }
+                        }// 데이터가 제대로 로드되었는지 확인하는 로그 추가
+                        Log.d("MainActivity", "Top restaurants loaded: " + topRestaurantList.size() + " items.");
+                        Log.d("MainActivity", "Top restaurant IDs loaded: " + topRestaurantIds.size() + " items.");
+
+                        // 데이터가 비어 있는지 체크
+                        if (topRestaurantList.isEmpty()) {
+                            Log.e("MainActivity", "No top restaurants found.");
                         }
 
-                        // Pass the filtered data to the adapter
-                        adapter.updateData(topRestaurantList);
+                        // 어댑터 업데이트
+                        adapter.updateData(topRestaurantList, topRestaurantIds);
                     } else {
                         Log.w("Firestore", "Error getting documents.", task.getException());
                     }
@@ -590,6 +607,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<Restaurant> michelinRestaurantList = new ArrayList<>();
+                        List<String> michelinRestaurantIds = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             List<DocumentReference> categoryIds = (List<DocumentReference>) document.get("category_ids");
                             boolean matchesSeoul = false;
@@ -608,11 +626,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 Restaurant restaurant = document.toObject(Restaurant.class);
                                 restaurant.setViewType(MainRestaurantAdapter.VIEW_TYPE_MICHELIN_RESTAURANT);
                                 michelinRestaurantList.add(restaurant);
+                                michelinRestaurantIds.add(document.getId());
                             }
                         }
 
                         // Pass the filtered data to the adapter
-                        adapter.updateData(michelinRestaurantList);
+                        adapter.updateData(michelinRestaurantList, michelinRestaurantIds);
                     } else {
                         Log.w("Firestore", "Error getting documents.", task.getException());
                     }

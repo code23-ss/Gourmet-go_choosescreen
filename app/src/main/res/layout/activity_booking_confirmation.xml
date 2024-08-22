@@ -8,8 +8,7 @@
         android:id="@+id/booking_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/your_image" />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/booking_confirmed"
@@ -17,7 +16,18 @@
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:text="Booking Confirmed"
+        android:textColor="#FA5858"
         android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/booking_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:text="Booking Confirmed"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <TextView
@@ -61,7 +71,6 @@
 
             <!-- PartySize Text -->
             <TextView
-                android:id="@+id/party_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
@@ -71,6 +80,7 @@
 
             <!-- Number of People Text -->
             <TextView
+                android:id="@+id/party_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2 Adults"
@@ -88,7 +98,6 @@
 
             <!-- Date Text -->
             <TextView
-                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
@@ -98,6 +107,7 @@
 
             <!-- Date Value Text -->
             <TextView
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="9 Aug, Fri"
@@ -114,7 +124,6 @@
 
             <!-- Time Text -->
             <TextView
-                android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
@@ -124,6 +133,7 @@
 
             <!-- Time Value Text -->
             <TextView
+                android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12:00pm"

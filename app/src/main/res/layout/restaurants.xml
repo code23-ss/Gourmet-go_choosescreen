@@ -13,15 +13,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.SearchView
+        <SearchView
             android:id="@+id/search_view"
-            android:layout_width="395dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="30dp"
-            app:iconifiedByDefault="false"
-            app:queryHint="search" />
+            android:layout_alignParentTop="true"
+            android:queryHint="Search restaurants" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
