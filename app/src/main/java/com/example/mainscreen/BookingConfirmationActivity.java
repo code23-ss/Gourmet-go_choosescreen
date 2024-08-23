@@ -123,12 +123,12 @@ public class BookingConfirmationActivity extends AppCompatActivity {
                         time.setText(reservationTime);
                         contactInfo.setText(title + " " + firstName + " " + lastName + "\n" + mobileNumber + " · " + email);
                     } else {
-                        Toast.makeText(BookingConfirmationActivity.this, "예약 정보를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BookingConfirmationActivity.this, "Reservation information not found", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(BookingConfirmationActivity.this, "예약 정보를 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BookingConfirmationActivity.this, "Failed to load reservation information", Toast.LENGTH_SHORT).show();
                     finish();
                 });
     }
@@ -192,6 +192,9 @@ public class BookingConfirmationActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", (dialog, which) -> {
                     // 확인 버튼을 눌렀을 때 예약 삭제
                     cancelReservation(reservationId);
+                    Intent intent = new Intent(BookingConfirmationActivity.this, CancelActivity.class);
+                    startActivity(intent);
+                    finish();
                 })
                 .setNegativeButton("No", (dialog, which) -> {
                     // 취소 버튼을 눌렀을 때 대화상자 닫기

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="#FFFFFF">
+
+            <!-- Rating Bar -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How would you rate your experience?"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:padding="8dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:background="#E24443"
+                android:textColor="#FFFFFF" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1"
+                android:layout_marginBottom="30dp"
+                android:rating="0"/>
+
+            <!-- When did you go? -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="When did you go?"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:padding="8dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:background="#E24443"
+                android:textColor="#FFFFFF" />
+
+            <Spinner
+                android:id="@+id/spinnerDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"/>
+
+            <!-- Who did you go with? -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Who did you go with?"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:padding="8dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:background="#E24443"
+                android:textColor="#FFFFFF" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="30dp">
+
+                <RadioButton
+                    android:id="@+id/radioBusiness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Business"/>
+
+                <RadioButton
+                    android:id="@+id/radioCouples"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Couples"/>
+
+                <RadioButton
+                    android:id="@+id/radioFamily"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Family"/>
+
+                <RadioButton
+                    android:id="@+id/radioFriends"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Friends"/>
+
+                <RadioButton
+                    android:id="@+id/radioSolo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Solo"/>
+            </RadioGroup>
+
+            <!-- What were you here for? -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="What were you here for?"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:padding="8dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:background="#E24443"
+                android:textColor="#FFFFFF" />
+
+            <Spinner
+                android:id="@+id/spinnerPurpose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"/>
+
+            <!-- EditText for 'Other' option -->
+            <EditText
+                android:id="@+id/editTextOtherPurpose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Please specify..."
+                android:visibility="gone"
+                android:layout_marginBottom="30dp"
+                android:minLines="1"
+                android:padding="8dp"/>
+
+            <!-- Write your review -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Write your review"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:padding="8dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:background="#E24443"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/editReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="This spot is great for a casual night out..."
+                android:minLines="5"
+                android:layout_marginBottom="30dp"
+                android:background="@android:drawable/edit_text"
+                android:padding="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title your review"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:padding="8dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:background="#E24443"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/editTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Give us the gist of your experience"
+                android:minLines="1"
+                android:layout_marginBottom="30dp"
+                android:background="@android:drawable/edit_text"
+                android:padding="8dp"/>
+
+            <!-- Add some photos section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add some photos"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:padding="8dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:background="#E24443"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Optional"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Photo Upload Section -->
+            <FrameLayout
+                android:id="@+id/photoUploadContainer"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@android:color/darker_gray"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:id="@+id/photoIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/ic_menu_camera" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Click to add photos"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="or drag and drop"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="80dp"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/darker_gray" />
+            </FrameLayout>
+
+            <!-- Certification Checkbox -->
+            <CheckBox
+                android:id="@+id/certificationCheckbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I certify that this review is based on my own experience and is my genuine opinion..."
+                android:layout_marginBottom="16dp" />
+
+            <!-- Continue Button -->
+            <Button
+                android:id="@+id/continueButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E24443"
+                android:text="Continue"
+                android:textColor="@android:color/white"
+                android:textSize="16dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

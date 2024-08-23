@@ -51,6 +51,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book);
 
+
         // Intent에서 문서 ID, 이미지 경로, 이름 가져오기
         Intent intent = getIntent();
         String restaurantId = intent.getStringExtra("restaurant_id");
@@ -64,6 +65,18 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
         // Firestore 초기화
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // 리뷰 추가 TextView를 찾아 클릭 리스너 설정
+        TextView addReviewTextView = findViewById(R.id.add_review);
+        addReviewTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ReviewActivity로 넘어가는 Intent 생성
+                Intent reviewIntent = new Intent(RestaurantDetailsActivity.this, ReviewActivity.class);
+                reviewIntent.putExtra("restaurant_id", restaurantId); // 필요한 경우, 식당 ID를 넘겨줄 수 있습니다.
+                startActivity(reviewIntent);
+            }
+        });
 
         // Firestore에서 문서 ID로 필터링
         db.collection("restaurants").document(restaurantId).get()

@@ -42,9 +42,12 @@
         <activity android:name=".WaitActivity"/>
         <activity android:name=".Book2Activity"/>
         <activity android:name=".WaitActivity2"/>
+        <activity android:name=".WaitingConfirmationActivity"/>
         <activity android:name=".BookingConfirmationActivity"/>
         <activity android:name=".RestaurantDetailsActivity" />
         <activity android:name=".FullScreenImageActivity"/>
+        <activity android:name=".ReviewActivity"/>
+        <activity android:name=".WriteCommentActivity"/>
 
         <activity
             android:name=".MainscreenActivity"

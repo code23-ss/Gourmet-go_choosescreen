@@ -64,16 +64,24 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="60dp"
+                        android:layout_width="120dp"
                         android:layout_height="50dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
                         android:src="@drawable/stars" />
 
                     <TextView
+                        android:id="@+id/add_review"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="10dp"
-                        android:text="please leave a review" />
+                        android:textSize="18dp"
+                        android:gravity="center"
+                        android:textColor="#0000FF"
+                        android:textStyle="bold"
+                        android:text="@string/underlined_text"/>
 
                 </LinearLayout>
 

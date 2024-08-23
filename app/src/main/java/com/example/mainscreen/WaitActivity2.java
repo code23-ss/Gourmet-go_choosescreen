@@ -18,7 +18,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class WaitActivity2 extends AppCompatActivity {
 
@@ -84,6 +91,7 @@ public class WaitActivity2 extends AppCompatActivity {
 
         // Set up the button click listener
         buttonContinue.setOnClickListener(v -> {
+            FirebaseUser currentUser = mAuth.getCurrentUser();
             // Get selected values
             int selectedPeopleId = radioGroupPeople.getCheckedRadioButtonId();
             RadioButton selectedPeopleButton = findViewById(selectedPeopleId);
@@ -125,24 +133,39 @@ public class WaitActivity2 extends AppCompatActivity {
 
 
     private void saveWaitingData(String restaurantId, String numberOfPeople, String diningOption) {
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        // 한국 시간(KST)으로 현재 날짜와 시간을 가져옴
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        timeFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
+        String currentDate = dateFormat.format(new Date());
+        String currentTime = timeFormat.format(new Date());
+
         // Create waiting data map
         Map<String, Object> waitingData = new HashMap<>();
         waitingData.put("restaurant_id", restaurantId);
         waitingData.put("numberOfPeople", numberOfPeople);
         waitingData.put("diningOption", diningOption);
+        waitingData.put("date", currentDate); // 현재 날짜 추가
+        waitingData.put("time", currentTime); // 현재 시간 추가
+        waitingData.put("userId", currentUser.getUid()); // 사용자의 UID 추가
 
         // Save to Firestore
         firestore.collection("waitings") // The name of the collection where waitings will be stored
                 .add(waitingData)
                 .addOnSuccessListener(documentReference -> {
-                    String reservationId = documentReference.getId(); // 문서 ID를 가져옴
-                    Log.d("ReservationID", "Reservation ID: " + reservationId);
+                    String waitingsId = documentReference.getId(); // 문서 ID를 가져옴
+                    Log.d("WaitingsID", "Waitings ID: " + waitingsId);
                     // Check if user is logged in
-                    FirebaseUser currentUser = mAuth.getCurrentUser();
                     if (currentUser != null) {
                         // User is logged in, navigate to the next screen
-                        Intent intent = new Intent(this, BookingConfirmationActivity.class);
-                        intent.putExtra("reservation_id", reservationId); // 예약 문서 ID 전달
+                        Intent intent = new Intent(this, WaitingConfirmationActivity.class);
+                        intent.putExtra("waiting_id", waitingsId); // 예약 문서 ID 전달
                         intent.putExtra("restaurant_id", restaurantId); // 문서 ID 전달
                         intent.putExtra("path", "waiting"); // 대기 경로 구분
                         startActivity(intent);
@@ -151,7 +174,6 @@ public class WaitActivity2 extends AppCompatActivity {
                         Intent intent = new Intent(this, MainscreenActivity.class);
                         intent.putExtra("previousActivity", getClass().getName());
                         startActivity(intent);
-
                     }
                     finish(); // Close the activity and go back to the previous screen
                 })
@@ -159,4 +181,5 @@ public class WaitActivity2 extends AppCompatActivity {
                     Toast.makeText(WaitActivity2.this, "Error adding waiting", Toast.LENGTH_SHORT).show();
                 });
     }
+
 }

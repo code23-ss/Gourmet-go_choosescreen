@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="REVIEW"
+                android:textSize="24sp"
+                android:padding="16dp"
+                android:gravity="center"
+                android:textColor="#000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Click image to \n ADD REVIEW"
+                    android:textSize="14sp"
+                    android:gravity="right"
+                    android:padding="16dp"
+                    android:textColor="#000000" />
+
+                <ImageView
+                    android:id="@+id/edit"
+                    android:layout_width="40dp"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="right"
+                    android:src="@drawable/edit"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="Add Review"
+                    android:layout_marginEnd="16dp"/>
+            </LinearLayout>
+
+
+            <!-- Container for dynamic content (reviews) -->
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!-- Dynamic reviews will be added here -->
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

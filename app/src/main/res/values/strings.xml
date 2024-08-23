@@ -6,6 +6,7 @@
         <item>Jeju</item>
     </string-array>
 
+    <string name="underlined_text"><![CDATA[Tap Review]]></string>
 
     <style name="CustomRelativeLayout">
         <item name="android:layout_width">match_parent</item>
