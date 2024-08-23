@@ -79,6 +79,7 @@
                         android:padding="15dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/book"
+                        android:onClick="openRestaurantsActivity"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -106,6 +107,7 @@
                         android:padding="15dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/wait"
+                        android:onClick="openWaitActivity"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

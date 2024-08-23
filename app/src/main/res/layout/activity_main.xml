@@ -259,7 +259,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:onClick="openRestaurantsActivity"
-                        android:tag="categories/Location/Subcategories/Seoul/Gangnam"
+                        android:tag="categories/Location/Subcategories/Seoul/Sub_subcategories/Gangnam"
                         app:cardCornerRadius="10dp">
 
                         <FrameLayout
@@ -292,7 +292,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:onClick="openRestaurantsActivity"
-                        android:tag="categories/Location/Subcategories/Seoul/Gwanghwamun"
+                        android:tag="categories/Location/Subcategories/Seoul/Sub_subcategories/Gwanghwamun"
                         app:cardCornerRadius="10dp">
 
                         <FrameLayout
@@ -325,7 +325,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:onClick="openRestaurantsActivity"
-                        android:tag="categories/Location/Subcategories/Seoul/Hongdae"
+                        android:tag="categories/Location/Subcategories/Seoul/Sub_subcategories/Hongdae"
                         app:cardCornerRadius="10dp">
 
                         <FrameLayout
@@ -358,7 +358,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:onClick="openRestaurantsActivity"
-                        android:tag="categories/Location/Subcategories/Seoul/Insadong"
+                        android:tag="categories/Location/Subcategories/Seoul/Sub_subcategories/Insadong"
                         app:cardCornerRadius="10dp">
 
                         <FrameLayout
@@ -392,7 +392,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:onClick="openRestaurantsActivity"
-                        android:tag="categories/Location/Subcategories/Seoul/Itaewon"
+                        android:tag="categories/Location/Subcategories/Seoul/Sub_subcategories/Itaewon"
                         app:cardCornerRadius="10dp">
 
                         <FrameLayout
@@ -425,7 +425,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:onClick="openRestaurantsActivity"
-                        android:tag="categories/Location/Subcategories/Seoul/Jamsil"
+                        android:tag="categories/Location/Subcategories/Seoul/Sub_subcategories/Jamsil"
                         app:cardCornerRadius="10dp">
 
                         <FrameLayout
@@ -458,7 +458,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:onClick="openRestaurantsActivity"
-                        android:tag="categories/Location/Subcategories/Seoul/Myeongdong"
+                        android:tag="categories/Location/Subcategories/Seoul/Sub_subcategories/Myeongdong"
                         app:cardCornerRadius="10dp">
 
                         <FrameLayout
@@ -491,7 +491,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:onClick="openRestaurantsActivity"
-                        android:tag="categories/Location/Subcategories/Seoul/Seongsu"
+                        android:tag="categories/Location/Subcategories/Seoul/Sub_subcategories/Seongsu"
                         app:cardCornerRadius="10dp">
 
                         <FrameLayout

@@ -406,9 +406,13 @@ public class JejuActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (imageViewId == R.id.book) {
                     intent.putExtra("locationPath", locationPath);
                     intent.putExtra("matchType", matchType);
+                    intent.putExtra("SHOW_BUTTON", "BOOK");
+                    Log.d("JejuActivity", "Sending SHOW_BUTTON: BOOK");
                 }else if (imageViewId == R.id.wait) {
                     intent.putExtra("locationPath", locationPath);
                     intent.putExtra("matchType", matchType);
+                    intent.putExtra("SHOW_BUTTON", "WAIT");
+                    Log.d("JejuActivity", "Sending SHOW_BUTTON: WAIT");
                 }
 
                 startActivity(intent);
@@ -535,6 +539,7 @@ public class JejuActivity extends AppCompatActivity implements AdapterView.OnIte
                                 Restaurant restaurant = document.toObject(Restaurant.class);
                                 restaurant.setViewType(MainRestaurantAdapter.VIEW_TYPE_TOP_RESTAURANT);
                                 topRestaurantList.add(restaurant);
+                                topRestaurantIds.add(document.getId());
                             }
                         }
 
@@ -575,6 +580,7 @@ public class JejuActivity extends AppCompatActivity implements AdapterView.OnIte
                                 Restaurant restaurant = document.toObject(Restaurant.class);
                                 restaurant.setViewType(MainRestaurantAdapter.VIEW_TYPE_MICHELIN_RESTAURANT);
                                 michelinRestaurantList.add(restaurant);
+                                michelinRestaurantIds.add(document.getId());
                             }
                         }
 

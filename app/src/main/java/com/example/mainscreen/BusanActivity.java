@@ -163,9 +163,26 @@ public class BusanActivity extends AppCompatActivity implements AdapterView.OnIt
         Intent intent = new Intent(this, RestaurantsActivity.class);
         intent.putExtra("locationPath", locationPath); // 경로를 전달
         intent.putExtra("matchType", matchType); // matchType을 전달
+
+        Log.d(TAG, "Starting RestaurantsActivity with locationPath: " + locationPath + " and matchType: " + matchType);
         startActivity(intent);
     }
 
+    public void openWaitActivity(View view) {
+        String locationPath = (String) view.getTag(TAG_LOCATION_PATH); // 태그에서 경로를 가져옴
+        String matchType = (String) view.getTag(TAG_MATCH_TYPE); // 태그에서 matchType을 가져옴
+
+        Log.d(TAG, "Sending locationPath to WaitActivity: " + locationPath);
+        Log.d(TAG, "Sending matchType to WaitActivity: " + matchType);
+
+        // WaitActivity로 이동하는 Intent
+        Intent intent = new Intent(this, WaitActivity.class);
+        intent.putExtra("locationPath", locationPath); // 경로를 전달
+        intent.putExtra("matchType", matchType); // matchType을 전달
+        // Intent 실행 로그
+        Log.d(TAG, "Starting WaitActivity with locationPath: " + locationPath + " and matchType: " + matchType);
+        startActivity(intent);
+    }
 
     private void setupCategoryButton(int buttonId, String foodTypeCategoryPath, String locationCategoryPath, String colorHex) {
         Button button = findViewById(buttonId);
@@ -402,9 +419,13 @@ public class BusanActivity extends AppCompatActivity implements AdapterView.OnIt
                 if (imageViewId == R.id.book) {
                     intent.putExtra("locationPath", locationPath);
                     intent.putExtra("matchType", matchType);
+                    intent.putExtra("SHOW_BUTTON", "BOOK");
+                    Log.d("BusanActivity", "Sending SHOW_BUTTON: BOOK");
                 }else if (imageViewId == R.id.wait) {
                     intent.putExtra("locationPath", locationPath);
                     intent.putExtra("matchType", matchType);
+                    intent.putExtra("SHOW_BUTTON", "WAIT");
+                    Log.d("BusanActivity", "Sending SHOW_BUTTON: WAIT");
                 }
 
                 startActivity(intent);
@@ -532,7 +553,15 @@ public class BusanActivity extends AppCompatActivity implements AdapterView.OnIt
                                 Restaurant restaurant = document.toObject(Restaurant.class);
                                 restaurant.setViewType(MainRestaurantAdapter.VIEW_TYPE_TOP_RESTAURANT);
                                 topRestaurantList.add(restaurant);
+                                topRestaurantIds.add(document.getId());
                             }
+                        }// 데이터가 제대로 로드되었는지 확인하는 로그 추가
+                        Log.d("MainActivity", "Top restaurants loaded: " + topRestaurantList.size() + " items.");
+                        Log.d("MainActivity", "Top restaurant IDs loaded: " + topRestaurantIds.size() + " items.");
+
+                        // 데이터가 비어 있는지 체크
+                        if (topRestaurantList.isEmpty()) {
+                            Log.e("MainActivity", "No top restaurants found.");
                         }
 
                         // Pass the filtered data to the adapter
@@ -572,6 +601,7 @@ public class BusanActivity extends AppCompatActivity implements AdapterView.OnIt
                                 Restaurant restaurant = document.toObject(Restaurant.class);
                                 restaurant.setViewType(MainRestaurantAdapter.VIEW_TYPE_MICHELIN_RESTAURANT);
                                 michelinRestaurantList.add(restaurant);
+                                michelinRestaurantIds.add(document.getId());
                             }
                         }
 
